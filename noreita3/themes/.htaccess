@@ -1,0 +1,3 @@
+<Files ~ "\.(html?|ini|log|dat|json|inc)$">
+	Require all denied
+</Files>
