@@ -39,7 +39,7 @@ class sns_share
 		$hide_thumbnail = filter_input_data('GET', "hide_thumbnail", FILTER_VALIDATE_BOOLEAN);
 		//年齢制限が設定されている時は、閲覧注意画像を共有するチェックボックスを表示しない
 		$set_nsfw_hide_flag = $age_check_required_to_view ? false : $set_nsfw_hide_flag;
-		$hide_thumbnail = $age_check_required_to_view ? false : $hide_thumbnail; 
+		$hide_thumbnail = $age_check_required_to_view ? false : $hide_thumbnail;
 		
 		$admin_pass = null;
 		//HTML出力
