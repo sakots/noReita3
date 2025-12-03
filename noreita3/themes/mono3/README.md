@@ -16,8 +16,8 @@ pnpm install
 pnpm install  --save-dev axios
 ```
 
-### iconify
+### simple-icons
 
 ```bash
-pnpm install --save-dev @iconify/vue
+pnpm install --save-dev simple-icons
 ```
