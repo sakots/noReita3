@@ -1,0 +1,15 @@
+.vscode/*
+.DS_Store
+
+img/
+thumb/
+thumbnail/
+webp/
+temp/
+tmp/
+cache/
+errorlog/
+
+app/
+config.php
+*.db
