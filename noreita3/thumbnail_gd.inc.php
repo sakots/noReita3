@@ -231,12 +231,12 @@ class thumbnail_gd {
 		
 		}elseif(isset($options['thumbnail_webp'])){
 
-			$outfile=THUMB_DIR.$time.'s.webp';
+			$outfile=THUMBNAIL_DIR.$time.'s.webp';
 			ImageWEBP($im_out, $outfile,90);
 
 		}else{
 
-			$outfile=THUMB_DIR.$time.'s.jpg';
+			$outfile=THUMBNAIL_DIR.$time.'s.jpg';
 			// サムネイル画像を保存
 			ImageJPEG($im_out, $outfile,90);
 
