@@ -1,4 +1,4 @@
-# お絵かき掲示板PHPスクリプト noReitaV
+# お絵かき掲示板PHPスクリプト noReita3
 
 ![php](https://img.shields.io/badge/php-7.4-green.svg)
 ![php](https://img.shields.io/badge/php-8.x-green.svg)
@@ -22,7 +22,7 @@
 ## 動作環境
 
 - PHP7.4以上の環境が必要です。
-  - PHP7.4,PHP8.2～8.5で動作確認しています。
+  - PHP7.4,PHP8.2-8.5で動作確認しています。
   - PHP8.2-PHP8.5での使用を推奨します。
 
 ## noReita v2以前との互換
