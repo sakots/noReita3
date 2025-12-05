@@ -6,9 +6,14 @@ Learn more about the recommended Project Setup and IDE Support in the [Vue Docs 
 
 ## install
 
+じゅんび
+
 ```bash
 pnpm install
+pnpm approve-builds
 ```
+
+以下追加モジュール
 
 ### axios
 
@@ -20,4 +25,10 @@ pnpm install  --save-dev axios
 
 ```bash
 pnpm install --save-dev simple-icons
+```
+
+### GLightbox
+
+```bash
+pnpm install --save-dev glightbox
 ```
