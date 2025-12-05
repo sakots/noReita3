@@ -10,19 +10,19 @@ const FUNCTIONS_VER = 20251206;
 function app_to_use(): array {
   $arr_apps = [];
   if(USE_PAINTBBS_NEO){
-    $arr_apps[]='neo';
+    $arr_apps[] = 'neo';
   }
   if(USE_LITACHIX){
-    $arr_apps[]='chi';
+    $arr_apps[] = 'chi';
   }
   if(USE_KLECKS){
-    $arr_apps[]='klecks';
+    $arr_apps[] = 'klecks';
   }
   if(USE_TEGAKI){
-    $arr_apps[]='tegaki';
+    $arr_apps[] = 'tegaki';
   }
   if(USE_AXNOS_PAINT){
-    $arr_apps[]='axnos';
+    $arr_apps[] = 'axnos';
   }
   return $arr_apps;
 }
