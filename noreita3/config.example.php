@@ -518,8 +518,6 @@ const TEMP_DIR = "temp/";
 const IMAGE_DIR = "img/";
 // サムネイル
 const THUMBNAIL_DIR = "thumbnail/";
-//データベース接続PDO
-define('DB_PDO', 'sqlite:' . DATABASE_NAME . '.db');
 
 //設定ファイルバージョン
 const CONFIG_VER = 20251202;
