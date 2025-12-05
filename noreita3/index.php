@@ -82,6 +82,6 @@ $theme_dir = 'themes/'.THEME_DIR;
 if(!MAX_LOGS || !is_numeric(MAX_LOGS) || MAX_LOGS < 1) {
 	error($en ? 'The maximum number of threads is not set or is an invalid value.' : '最大スレッド数が設定されていないか、不正な値です。');
 }
-if(!isset($admin_pass)||!$admin_pass) {
+if(ADMIN_PASS === NULL || !ADMIN_PASS) {
   error($en ? 'The administrator password has not been set.' : '管理者パスワードが設定されていません。');
 }
