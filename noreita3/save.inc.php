@@ -2,7 +2,9 @@
 //Petit Note (c)さとぴあ @satopian 2021-2025 MIT License
 //https://paintbbs.sakura.ne.jp/
 
-$save_inc_ver=20250918;
+// 2025/12/06 定数名の変更
+
+const SAVE_INC_VER = 20251206;
 class image_save{
 
 	private $security_timer,$imgfile,$en,$count,$errtext,$session_usercode; // プロパティとして宣言
@@ -12,7 +14,7 @@ class image_save{
 
 		global $security_timer,$pmax_w,$pmax_h;
 
-	// $security_timer=60;	
+	// $security_timer=60;
 	$this->security_timer = $security_timer ?? 0;
 	//容量違反チェックをする する:1 しない:0
 	defined('SIZE_CHECK') or define('SIZE_CHECK', '1');
@@ -33,12 +35,12 @@ class image_save{
 	$this->imgfile = time().substr(microtime(),2,6);	//画像ファイル名
 	$this->imgfile = is_file(TEMP_DIR.$this->imgfile.'.png') ? ((time()+1).substr(microtime(),2,6)) : $this->imgfile;
 	
-	$this->pmax_w= $pmax_w ?? '';
-	$this->pmax_h= $pmax_h ?? '';
+	$this->pmax_w= MAX_CANVAS_WIDTH ?? '';
+	$this->pmax_h= MAX_CANVAS_HEIGHT ?? '';
 	
 	}
 
-	public function save_klecks(): void { 
+	public function save_klecks(): void {
 
 		$this->error_type="klecks";
 
@@ -65,7 +67,7 @@ class image_save{
 		$sendheader = str_replace("&amp;", "&", $sendheader);
 		$this->tool = 'neo';
 		
-		//拡張ヘッダから情報を取得		
+		//拡張ヘッダから情報を取得
 		parse_str($sendheader, $u);
 		$this->repcode = isset($u['repcode']) ? t($u['repcode']) : '';
 		$this->resto = isset($u['resto']) ? t($u['resto']) : '';
@@ -214,7 +216,7 @@ class image_save{
 		if(isset($_FILES['chibifile']) && ($_FILES['chibifile']['error'] == UPLOAD_ERR_OK)){
 			if(mime_content_type($_FILES['chibifile']['tmp_name'])==="application/octet-stream"){
 				if(!SIZE_CHECK || ($_FILES['chibifile']['size'] < (PSD_MAX_KB * 1024))){
-					//chiファイルのアップロードができなかった場合はエラーメッセージはださず、画像のみ投稿する。 
+					//chiファイルのアップロードができなかった場合はエラーメッセージはださず、画像のみ投稿する。
 					move_uploaded_file($_FILES['chibifile']['tmp_name'], TEMP_DIR.$this->imgfile.'.chi');
 					if(is_file(TEMP_DIR.$this->imgfile.'.chi')){
 						chmod(TEMP_DIR.$this->imgfile.'.chi',PERMISSION_FOR_DEST);
@@ -227,7 +229,7 @@ class image_save{
 		if(isset($_FILES['psd']) && ($_FILES['psd']['error'] == UPLOAD_ERR_OK)){
 			if(mime_content_type($_FILES['psd']['tmp_name'])==="image/vnd.adobe.photoshop"){
 				if(!SIZE_CHECK || ($_FILES['psd']['size'] < (PSD_MAX_KB * 1024))){
-					//PSDファイルのアップロードができなかった場合はエラーメッセージはださず、画像のみ投稿する。 
+					//PSDファイルのアップロードができなかった場合はエラーメッセージはださず、画像のみ投稿する。
 					move_uploaded_file($_FILES['psd']['tmp_name'], TEMP_DIR.$this->imgfile.'.psd');
 					if(is_file(TEMP_DIR.$this->imgfile.'.psd')){
 						chmod(TEMP_DIR.$this->imgfile.'.psd',PERMISSION_FOR_DEST);
@@ -238,7 +240,7 @@ class image_save{
 		if(isset($_FILES['tgkr']) && ($_FILES['tgkr']['error'] == UPLOAD_ERR_OK)){
 			if(mime_content_type($_FILES['tgkr']['tmp_name'])==="application/octet-stream"){
 				if(!SIZE_CHECK || ($_FILES['tgkr']['size'] < (PSD_MAX_KB * 1024))){
-					//PSDファイルのアップロードができなかった場合はエラーメッセージはださず、画像のみ投稿する。 
+					//PSDファイルのアップロードができなかった場合はエラーメッセージはださず、画像のみ投稿する。
 					move_uploaded_file($_FILES['tgkr']['tmp_name'], TEMP_DIR.$this->imgfile.'.tgkr');
 					if(is_file(TEMP_DIR.$this->imgfile.'.tgkr')){
 						chmod(TEMP_DIR.$this->imgfile.'.tgkr',PERMISSION_FOR_DEST);
@@ -251,7 +253,7 @@ class image_save{
 		if(isset($_FILES['pch']) && ($_FILES['pch']['error'] == UPLOAD_ERR_OK)){
 			if(mime_content_type($_FILES['pch']['tmp_name'])==="application/octet-stream"){
 				if(!SIZE_CHECK || ($_FILES['pch']['size'] < (PSD_MAX_KB * 1024))){
-					//PSDファイルのアップロードができなかった場合はエラーメッセージはださず、画像のみ投稿する。 
+					//PSDファイルのアップロードができなかった場合はエラーメッセージはださず、画像のみ投稿する。
 					move_uploaded_file($_FILES['pch']['tmp_name'], TEMP_DIR.$this->imgfile.'.pch');
 					if(is_file(TEMP_DIR.$this->imgfile.'.pch')){
 						chmod(TEMP_DIR.$this->imgfile.'.pch',PERMISSION_FOR_DEST);
