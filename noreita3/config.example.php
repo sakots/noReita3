@@ -1,7 +1,7 @@
 <?php
 //--------------------------------------------------
 //  おえかきけいじばん「noReita3」設定ファイル
-//  by sakots & OekakiBBS reDev.Team  https://oekakibbs.moe/
+//  by sakots https://oekakibbs.moe/
 //--------------------------------------------------
 
 
@@ -49,7 +49,7 @@ const SUBJECT_INPUT_REQUIRED = 0;
 
 // 本文を必須にする
 // する: 1 しない: 0
-const COMMENT_REQUIERED = 0;
+const COMMENT_REQUIRED = 0;
 
 // 本文の制限文字数。半角で
 const MAX_COMMENTS_LENGTH = 1000;
@@ -80,7 +80,7 @@ const THEME_DIR = "mono3/";
 // 文字をクオートで囲って、カンマで区切ります。
 // 説明文が不要なら []で。
 
-const BOARD_DESCRIPIONS = ['iPadやスマートフォンでも描けるお絵かき掲示板です。','楽しくお絵かき。','<a href="https://github.com/sakots/noReita3">スクリプトのソースはこちら</a>'];
+const BOARD_DESCRIPTIONS = ['iPadやスマートフォンでも描けるお絵かき掲示板です。','楽しくお絵かき。','<a href="https://github.com/sakots/noReita3">スクリプトのソースはこちら</a>'];
 
 
 /*メール通知*/
@@ -116,7 +116,7 @@ const BAD_NAMES = ['管理人','ブランド','通販','販売','口コミ'];
 const BAD_STRING_COMBINATIONS = ['激安','低価','コピー','品質を?重視','大量入荷','シャネル','シュプリーム','バレンシアガ','ブランド'];
 
 // 禁止ホスト
-const BANNED_HOSTS = ["badhost.example.com","spam.example.org"];
+const BANNED_HOSTS = ["bad.example.com","spam.example.org"];
 
 // ホスト名が逆引きできないIPアドレスからの投稿を拒絶する
 // する: 1 しない: 0
@@ -275,7 +275,7 @@ const SHOW_PREV_NEXT_THREAD_IMAGES = 1;
 
 // 管理者ページに最新のリリースのバージョンとリンクを表示する
 // する: 1 しない: 0
-const DISPLAY_LATEST_RELEASE_INFO_IN_ADMIN_PAGE = 1;
+const DISPLAY_LATEST_RELEASE = 1;
 
 // 続きを描く時は新規投稿でもパスワードを必須にする
 // する: 1 しない: 0
@@ -342,11 +342,11 @@ const USE_THUMBNAIL = 1;
 
 // アップロード時にpng形式で保存する最大ファイルサイズ
 // このファイルサイズを超える時はwebpに変換(単位kb)
-const UPLOAD_PNG_THERESHOLD = 1024;
+const UPLOAD_PNG_THRESHOLD = 1024;
 
 // ペイント時にpng形式で保存する最大ファイルサイズ
 // このファイルサイズを超える時はwebpに変換(単位kb)
-const PAINT_PNG_THERESHOLD = 1024;
+const PAINT_PNG_THRESHOLD = 1024;
 
 /*合言葉設定*/
 
@@ -415,7 +415,7 @@ const MINIMUM_DRAWING_TIME = 5;
 // 初期設定の180で、半年前に立てられたスレッドに返信できなくなります。
 // 日数による制限をしない時は 0 。
 // 管理者投稿はこの制限を受けません。
-const ELASPED_DAYS = 360;
+const ELAPSED_DAYS = 360;
 
 // すべての投稿を拒否する
 // 管理人長期不在、展示のみなど。
