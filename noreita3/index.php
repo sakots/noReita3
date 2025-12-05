@@ -33,7 +33,7 @@ if(!is_file(__DIR__.'/functions.php')) {
   die(__DIR__.'/functions.php'.($en ? ' does not exist.' : 'がありません。'));
 }
 require_once(__DIR__.'/functions.php');
-if(!isset($functions_ver) || $functions_ver < 20251206) {
+if(FUNCTIONS_VER === NULL || FUNCTIONS_VER < 20251206) {
   die($en ? 'Please update functions.php to the latest version.' : 'functions.phpを最新版に更新してください。');
 }
 
@@ -46,7 +46,7 @@ if(!isset($misskey_note_ver) || $misskey_note_ver < 20250718) {
 
 check_file(__DIR__.'/save.inc.php');
 require_once(__DIR__.'/save.inc.php');
-if(!isset($save_inc_ver) || $save_inc_ver < 20250918) {
+if(SAVE_INC_VER === NULL || SAVE_INC_VER < 20251206) {
   die($en ? 'Please update save.inc.php to the latest version.' : 'save.inc.phpを最新版に更新してください。');
 }
 
@@ -71,8 +71,17 @@ if(!isset($thumbnail_gd_ver)||$thumbnail_gd_ver<20250707) {
 check_file(__DIR__.'/noticemail.inc.php');
 require_once(__DIR__.'/noticemail.inc.php');
 if(!isset($noticemail_inc_ver) || $noticemail_inc_ver < 20250315) {
-  error($en ? 'Please update noticemail.inc.php to the latest version.' : 'noticemail.inc.phpを最新版に更新してください。');
+  error($en ? 'Please update notice_mail.inc.php to the latest version.' : 'notice_mail.inc.phpを最新版に更新してください。');
 }
 
 //--------------------------------------------------
 
+//テンプレート
+$theme_dir = 'themes/'.THEME_DIR;
+
+if(!MAX_LOGS || !is_numeric(MAX_LOGS) || MAX_LOGS < 1) {
+	error($en ? 'The maximum number of threads is not set or is an invalid value.' : '最大スレッド数が設定されていないか、不正な値です。');
+}
+if(!isset($admin_pass)||!$admin_pass) {
+  error($en ? 'The administrator password has not been set.' : '管理者パスワードが設定されていません。');
+}
