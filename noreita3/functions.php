@@ -194,3 +194,38 @@ function filter_input_data(string $input, string $key, int $filter=0) {
     return $value;  // 他のフィルタはそのまま返す
   }
 }
+
+//タブ除去
+function delete_tab($str): string {
+	if(zero_check($str)){
+		return '0';
+	}
+	if(!$str){
+		return '';
+	}
+	return str_replace("\t","",(string)$str);
+}
+//タグ除去
+function delete_tag($str): string {
+	if(zero_check($str)){
+		return '0';
+	}
+	if(!$str){
+		return '';
+	}
+	return strip_tags((string)$str);
+}
+//エスケープ
+function escape_char($str) :string{
+	if(zero_check($str)){
+		return '0';
+	}
+	if(!$str){
+		return '';
+	}
+	return htmlspecialchars($str,ENT_QUOTES,"utf-8",false);
+}
+// 0 または "0" かどうか
+function zero_check($str): bool {
+	return($str === 0 || $str === '0');
+}
