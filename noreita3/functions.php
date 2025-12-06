@@ -148,9 +148,9 @@ function check_password_input_error_count(): void {
   if(!CHECK_PASSWORD_INPUT_ERROR_COUNT) {
     return;
   }
-  $file = __DIR__.'/template/errorlog/error.log';
+  $file = __DIR__.'/log/error.log';
   $user_ip = get_uip();
-  check_dir(__DIR__.'/template/errorlog/');
+  check_dir(__DIR__.'/log/errorlog/');
   $arr_err = is_file($file) ? file($file) : [];
   if(count($arr_err) >= 5){
     error($en ? 'Rejected.' : '拒絶されました。');
