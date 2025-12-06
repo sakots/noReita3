@@ -157,12 +157,12 @@ const USE_LITACHIX = 1;
 // 使う: 1 使わない: 0
 const USE_KLECKS = 1;
 
-//各アプリのディレクトリ。index.phpから見て
+// 各アプリのディレクトリ。index.phpから見て
 const APP_DIR = 'app/';
 
 // パレットデータファイルの配列
 // ['表示名', 'ファイル名'] の配列を追加してください。
-const PALETTS_DAT = [
+const PALETTES_DAT = [
 	['標準', 'palette.txt'],
 	['PCCS_HSL', 'p_PCCS.txt'],
 	['マンセルHV/C', 'p_munsellHVC.txt']
