@@ -5,6 +5,7 @@
 // 2025/12/06 定数名の変更
 
 const SAVE_INC_VER = 20251206;
+
 class image_save{
 
 	private $security_timer,$imgfile,$en,$count,$errtext,$session_usercode; // プロパティとして宣言
