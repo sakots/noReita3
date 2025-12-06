@@ -85,3 +85,43 @@ if(!MAX_LOGS || !is_numeric(MAX_LOGS) || MAX_LOGS < 1) {
 if(ADMIN_PASS === NULL || !ADMIN_PASS) {
   error($en ? 'The administrator password has not been set.' : '管理者パスワードが設定されていません。');
 }
+
+//出力配列
+$out = [];
+
+//共通変数
+$mode = (string)filter_input_data('POST','mode');
+$mode = $mode ? $mode :(string)filter_input_data('GET','mode');
+$resno = (int)filter_input_data('GET','resno',FILTER_VALIDATE_INT);
+$https_only = (bool)($_SERVER['HTTPS'] ?? '');
+//user-codeの発行
+$user_code = t(filter_input_data('COOKIE', 'user_code')); //user-codeを取得
+
+$dat['ver'] = REITA_VER;
+$dat['lot'] = REITA_LOT;
+$dat['board_name'] = BOARD_NAME;
+$dat['home_url'] = HOME_URL;
+$dat['p_def_w'] = DEFAULT_CANVAS_WIDTH;
+$dat['p_def_h'] = DEFAULT_CANVAS_HEIGHT;
+$dat['p_max_w'] = MAX_CANVAS_WIDTH;
+$dat['p_max_h'] = MAX_CANVAS_HEIGHT;
+
+$dat['use_neo'] = USE_PAINTBBS_NEO;
+$dat['use_litachix'] = USE_LITACHIX;
+$dat['use_klecks'] = USE_KLECKS;
+$dat['use_tegaki'] = USE_TEGAKI;
+$dat['use_axnos'] = USE_AXNOS_PAINT;
+
+$dat['pallets_dat'] = PALETTES_DAT;
+
+$dat['hide_id'] = HIDE_USER_ID;
+
+$dat['use_name'] = NAME_INPUT_REQUIRED;
+$dat['use_com'] = COMMENT_REQUIRED;
+$dat['use_sub'] = SUBJECT_INPUT_REQUIRED;
+
+$dat['descriptions'] = BOARD_DESCRIPTIONS;
+
+$dat['hide_drawing_time'] = USE_HIDE_DRAWING_TIME;
+$dat['hide_all_drawing_time'] = HIDE_ALL_DRAWING_TIME;
+
