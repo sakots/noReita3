@@ -8,14 +8,8 @@
 ![Downloads](https://img.shields.io/github/downloads/sakots/noReita3/total)
 ![License](https://img.shields.io/github/license/sakots/noReita3)
 
-- SQLiteとvue.jsを利用したスレッド式の画像掲示板です。
+- SQLiteを利用したスレッド式の画像掲示板です。
 - PaintBBS NEO,tegaki.js,ChickenPaint,Klecksが使えるお絵かき掲示板です。
-
-## ぼんやりとした概要
-
-フロントエンドをVue.jsで、バックエンドをphpで。その間を[axios](https://github.com/axios/axios)でつなぐ。
-
-データベースはsqlite。phpでjson出力したらできそう。 -> [json-encode](https://www.php.net/manual/ja/function.json-encode.php)
 
 ---
 
