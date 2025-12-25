@@ -9,6 +9,7 @@ temp/
 tmp/
 cache/
 errorlog/
+BladeOne/
 
 app/
 config.php
