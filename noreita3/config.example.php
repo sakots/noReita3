@@ -9,10 +9,11 @@
 
 /*-----絶対に変更が必要な項目-----*/
 
+// 管理者パスワード 必ず変更してください。初期設定のままでは動かないようにしています。
+const ADMIN_PASS = "admin_password_change_me";
+
 // サブパスワード 必ず変更してください。
-// 管理者パスワード設定時にこれを使用します。
-// 初期値のままでは使用できません。
-const SECOND_PASS = "admin_password_change_me";
+const SECOND_PASS = "vTcjrmvQjcNdxt5h";
 
 // この掲示板の名前
 const BOARD_NAME = "おえかき掲示板 noReita3";
