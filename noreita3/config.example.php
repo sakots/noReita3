@@ -515,6 +515,15 @@ const CRYPT_PASS = "v25Xc9nZ82a5JPT"; //暗号鍵初期値
 const CRYPT_METHOD = "aes-128-cbc";
 const CRYPT_IV = "4HxFoxtvKL5Qr4xy"; //半角英数16文字
 
+// 画像やHTMLファイルのパーミッション。
+const PERMISSION_FOR_DEST = 0606; //初期値 0606
+
+// ブラウザから直接呼び出さないログファイルのパーミッション(たぶん使ってない)
+const PERMISSION_FOR_LOG = 0600; //初期値 0600
+
+// 画像や動画ファイルを保存するディレクトリのパーミッション
+const PERMISSION_FOR_DIR = 0707; //初期値 0707
+
 /*変更不可*/
 
 // 変更しないでください
