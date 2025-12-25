@@ -76,14 +76,14 @@ if(!isset($noticemail_inc_ver) || $noticemail_inc_ver < 20250315) {
 
 //--------------------------------------------------
 
-//BladeOne v4.19.1
+// BladeOne v4.19.1
 include(__DIR__ . '/BladeOne/lib/BladeOne.php');
 use eftec\bladeone\BladeOne;
 
 $views = __DIR__ . '/theme/' . THEME_DIR; // テンプレートフォルダ
 $cache = __DIR__ . '/cache'; // キャッシュフォルダ
 
-//キャッシュフォルダがなかったら作成
+// キャッシュフォルダがなかったら作成
 if (!file_exists($cache)) {
 	mkdir($cache, PERMISSION_FOR_DIR);
 }
@@ -91,19 +91,19 @@ if (!file_exists($cache)) {
 $blade = new BladeOne($views, $cache, BladeOne::MODE_AUTO);
 // MODE_DEBUGだと開発モード MODE_AUTOが速い。
 $blade->pipeEnable = true; // パイプのフィルターを使えるようにする
-//出力配列
+// 出力配列
 $dat = [];
 
 if(!MAX_LOGS || !is_numeric(MAX_LOGS) || MAX_LOGS < 1) {
 	error($en ? 'The maximum number of threads is not set or is an invalid value.' : '最大スレッド数が設定されていないか、不正な値です。');
 }
 
-//共通変数
+// 共通変数
 $mode = (string)filter_input_data('POST','mode');
 $mode = $mode ? $mode :(string)filter_input_data('GET','mode');
 $resno = (int)filter_input_data('GET','resno',FILTER_VALIDATE_INT);
 $https_only = (bool)($_SERVER['HTTPS'] ?? '');
-//user-codeの発行
+// user-codeの発行
 $user_code = t(filter_input_data('COOKIE', 'user_code')); //user-codeを取得
 
 $dat['ver'] = REITA_VER;
@@ -133,3 +133,14 @@ $dat['descriptions'] = BOARD_DESCRIPTIONS;
 
 $dat['hide_drawing_time'] = USE_HIDE_DRAWING_TIME;
 $dat['hide_all_drawing_time'] = HIDE_ALL_DRAWING_TIME;
+
+$dat['board_name'] = BOARD_NAME;
+
+// データベース接続PDO
+define('DB_PDO', 'sqlite:' . DATABASE_NAME . '.db');
+
+// 初期設定
+init();
+
+// 一時ファイル削除
+del_temp();

@@ -31,7 +31,7 @@ function get_csrf_token(): string {
   return $token;
 }
 
-//csrfトークンをチェッ
+//csrfトークンをチェック
 function check_csrf_token(): void {
   global $en;
 
@@ -168,6 +168,27 @@ function filter_input_data(string $input, string $key, int $filter=0) {
     default:
     return $value;  // 他のフィルタはそのまま返す
   }
+}
+
+/* テンポラリ内のゴミ除去 */
+function del_temp(): void {
+	$handle = opendir(TEMP_DIR);
+	while ($file = readdir($handle)) {
+		if (!is_dir($file)) {
+			$lapse = time() - filemtime(TEMP_DIR . $file);
+			if ($lapse > (14 * 24 * 3600)) {
+				safe_unlink(TEMP_DIR . $file);
+			}
+			//pchアップロードペイントファイル削除
+			if (preg_match("/\A(pchup-.*-tmp\.s?pch)\z/i", $file)) {
+				$lapse = time() - filemtime(TEMP_DIR . $file);
+				if ($lapse > (300)) { //5分
+					safe_unlink(TEMP_DIR . $file);
+				}
+			}
+		}
+	}
+	closedir($handle);
 }
 
 //タブ除去 t
