@@ -6,20 +6,20 @@
 
 const FUNCTIONS_VER = 20251206;
 
-function error($str,$history_back=true): void {
+function error($str,$history_back = true): void {
 
   global $en;
 
   $async_flag = (bool)filter_input_data('POST','async_flag',FILTER_VALIDATE_BOOLEAN);
   $http_x_requested_with = (bool)(isset($_SERVER['HTTP_X_REQUESTED_WITH']));
-  if($http_x_requested_with||$async_flag) {
+  if($http_x_requested_with || $async_flag) {
     header('Content-type: text/plain');
     die(h("error\n{$str}"));
   }
 
   // あとで出力を修正
-  $templete='error.html';
-  include __DIR__.'/'.$skindir.$templete;
+  $template = 'error.html';
+  include __DIR__.'/'.$skindir.$template;
   exit();
 }
 
@@ -226,4 +226,61 @@ function escape_char($str) :string{
 // 0 または "0" かどうか
 function zero_check($str): bool {
   return($str === 0 || $str === '0');
+}
+
+//-------------------------------------------------
+
+// データベース
+
+// SQLiteデータベース初期化
+function init_sqlite_db(): void {
+  try {
+  $db = new PDO('sqlite:' . DATABASE_NAME . '.db');
+  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $db->exec("CREATE TABLE IF NOT EXISTS tlog (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    no INTEGER NOT NULL,
+    created TIMESTAMP,
+    modified TIMESTAMP,
+    thread VARCHAR(1),
+    sub TEXT,
+    name TEXT,
+    verified TEXT,
+    com TEXT,
+    url TEXT,
+    img_file TEXT,
+    img_w TEXT,
+    img_h TEXT,
+    thumbnail TEXT,
+    paint_time TEXT,
+    img_hash TEXT,
+    tool TEXT,
+    pch_file TEXT,
+    pch_ext TEXT,
+    time TEXT NOT NULL,
+    first_posted_time TEXT NOT NULL,
+    host TEXT,
+    user_id TEXT,
+    hash TEXT,
+    parent TEXT,
+    age INT,
+    hidden VARCHAR(1),
+    sodane INTEGER DEFAULT 0,
+    nsfw VARCHAR(1)
+  )");
+  } catch (PDOException $e) {
+    error('Database initialization failed: ' . $e->getMessage());
+  }
+}
+
+// SQLiteデータベース接続
+function get_db(): PDO {
+	try {
+		$db = new PDO('sqlite:' . DATABASE_NAME . '.db');
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		return $db;
+	} catch (PDOException $e) {
+		error('Database connection failed: ' . $e->getMessage());
+		exit; // error()でexitするのでここは到達しないが、型チェックのため
+	}
 }
