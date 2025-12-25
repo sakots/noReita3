@@ -140,29 +140,6 @@ function app_to_use(): array {
   return $arr_apps;
 }
 
-//パスワードを5回連続して間違えた時は拒絶
-function check_password_input_error_count(): void {
-  global $en;
-  if(!CHECK_PASSWORD_INPUT_ERROR_COUNT) {
-    return;
-  }
-  $file = __DIR__.'/log/error.log';
-  $user_ip = get_uip();
-  check_dir(__DIR__.'/log/errorlog/');
-  $arr_err = is_file($file) ? file($file) : [];
-  if(count($arr_err) >= 5){
-    error($en ? 'Rejected.' : '拒絶されました。');
-  }
-  if(!is_admin_pass(filter_input_data('POST','admin_pass'))) {
-
-    $errorlog = $user_ip."\n";
-    file_put_contents($file,$errorlog,FILE_APPEND);
-    chmod($file,0600);
-  } else {
-    safe_unlink($file);
-  }
-}
-
 //filter_input のラッパー関数
 function filter_input_data(string $input, string $key, int $filter=0) {
   // $_GETまたは$_POSTからデータを取得
