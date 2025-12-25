@@ -88,6 +88,10 @@ if (!file_exists($cache)) {
 	mkdir($cache, PERMISSION_FOR_DIR);
 }
 
+$blade = new BladeOne($views, $cache, BladeOne::MODE_AUTO);
+// MODE_DEBUGだと開発モード MODE_AUTOが速い。
+$blade->pipeEnable = true; // パイプのフィルターを使えるようにする
+
 if(!MAX_LOGS || !is_numeric(MAX_LOGS) || MAX_LOGS < 1) {
 	error($en ? 'The maximum number of threads is not set or is an invalid value.' : '最大スレッド数が設定されていないか、不正な値です。');
 }
