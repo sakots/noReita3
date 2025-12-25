@@ -12,7 +12,7 @@
 // サブパスワード 必ず変更してください。
 // 管理者パスワード設定時にこれを使用します。
 // 初期値のままでは使用できません。
-const SECOND_PASS = "admin_pass_change_me";
+const SECOND_PASS = "admin_password_change_me";
 
 // この掲示板の名前
 const BOARD_NAME = "おえかき掲示板 noReita3";

@@ -23,8 +23,8 @@ if(!is_file(__DIR__.'/config.php')) {
 	die(__DIR__.'/config.php'.($en ? ' does not exist.' : 'がありません。'));
 }
 require_once(__DIR__.'/config.php');
-// 管理パスが初期値だと動かさない
-if(ADMIN_PASS === 'admin_password_change_me') {
+// 第2パスが初期値だと動かさない
+if(SECOND_PASS === 'admin_password_change_me') {
   die($en ? "Error. You must change the default admin password before using this program." : "エラー。本プログラムを使用する前に、管理者パスワードを初期値から変更する必要があります。");
 }
 
@@ -81,9 +81,6 @@ $theme_dir = 'themes/'.THEME_DIR;
 
 if(!MAX_LOGS || !is_numeric(MAX_LOGS) || MAX_LOGS < 1) {
 	error($en ? 'The maximum number of threads is not set or is an invalid value.' : '最大スレッド数が設定されていないか、不正な値です。');
-}
-if(ADMIN_PASS === NULL || !ADMIN_PASS) {
-  error($en ? 'The administrator password has not been set.' : '管理者パスワードが設定されていません。');
 }
 
 //出力配列
