@@ -25,7 +25,7 @@ if(!is_file(__DIR__.'/config.php')) {
 require_once(__DIR__.'/config.php');
 // 第2パスが初期値だと動かさない
 if(SECOND_PASS === 'admin_password_change_me') {
-  die($en ? "Error. You must change the default admin password before using this program." : "エラー。本プログラムを使用する前に、管理者パスワードを初期値から変更する必要があります。");
+  die($en ? "Error. You must change the default admin password before using this program." : "エラー。本プログラムを使用する前に、第2パスワードを初期値から変更する必要があります。");
 }
 
 // functions存在確認とバージョンチェック
