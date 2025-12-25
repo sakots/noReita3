@@ -76,7 +76,7 @@ if(!isset($noticemail_inc_ver) || $noticemail_inc_ver < 20250315) {
 
 //--------------------------------------------------
 
-//BladeOne v4.19.19
+//BladeOne v4.19.1
 include(__DIR__ . '/BladeOne/lib/BladeOne.php');
 use eftec\bladeone\BladeOne;
 
