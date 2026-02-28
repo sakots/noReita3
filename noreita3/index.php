@@ -121,6 +121,8 @@ $dat['use_klecks'] = USE_KLECKS;
 $dat['use_tegaki'] = USE_TEGAKI;
 $dat['use_axnos'] = USE_AXNOS_PAINT;
 
+$dat['app_dir'] = APP_DIR;
+
 $dat['pallets_dat'] = PALETTES_DAT;
 
 $dat['hide_id'] = HIDE_USER_ID;
