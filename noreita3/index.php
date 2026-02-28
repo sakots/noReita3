@@ -71,7 +71,7 @@ if(!isset($thumbnail_gd_ver)||$thumbnail_gd_ver<20250707) {
 check_file(__DIR__.'/noticemail.inc.php');
 require_once(__DIR__.'/noticemail.inc.php');
 if(!isset($noticemail_inc_ver) || $noticemail_inc_ver < 20250315) {
-  error($en ? 'Please update notice_mail.inc.php to the latest version.' : 'notice_mail.inc.phpを最新版に更新してください。');
+  error($en ? 'Please update noticemail.inc.php to the latest version.' : 'noticemail.inc.phpを最新版に更新してください。');
 }
 
 //--------------------------------------------------
@@ -94,7 +94,7 @@ $blade->pipeEnable = true; // パイプのフィルターを使えるように�
 // 出力配列
 $dat = [];
 
-if(!MAX_LOGS || !is_numeric(MAX_LOGS) || MAX_LOGS < 1) {
+if(!MAX_LOG || !is_numeric(MAX_LOG) || MAX_LOG < 1) {
 	error($en ? 'The maximum number of threads is not set or is an invalid value.' : '最大スレッド数が設定されていないか、不正な値です。');
 }
 
