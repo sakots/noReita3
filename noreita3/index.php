@@ -158,13 +158,13 @@ if(!$usercode){ //user-codeがなければ発行
 setcookie("usercode", $usercode, time()+(86400*365),"","",$https_only,true); //1年間
 $_SESSION['usercode'] = $usercode;
 
-$x_frame_options_deny = $x_frame_options_deny ?? true;
-if($x_frame_options_deny){
-	header("Content-Security-Policy: frame-ancestors 'none';");
-}
+//$x_frame_options_deny = $x_frame_options_deny ?? true;
+//if($x_frame_options_deny){
+//	header("Content-Security-Policy: frame-ancestors 'none';");
+//}
 //ダークモード
-if(!isset($_COOKIE["p_n_set_darkmode"])&&$darkmode_by_default){
-	setcookie("p_n_set_darkmode","1",time()+(60*60*24*180),"","",$https_only,true);
+if(!isset($_COOKIE["set_darkmode"])&&$darkmode_by_default){
+	setcookie("set_darkmode","1",time()+(60*60*24*180),"","",$https_only,true);
 }
 
 
