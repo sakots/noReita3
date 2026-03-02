@@ -279,6 +279,9 @@ function init(): void {
   check_dir(__DIR__."/avif");
   check_dir(__DIR__."/webp");
   check_dir(__DIR__."/cache");
+  if (!file_exists(__DIR__.DATABASE_NAME.'.db')) {
+    init_sqlite_db();
+  }
 }
 
 //-------------------------------------------------
@@ -325,6 +328,7 @@ function init_sqlite_db(): void {
   } catch (PDOException $e) {
     error('Database initialization failed: ' . $e->getMessage());
   }
+  chmod(DATABASE_NAME . '.db', 0600);
 }
 
 // SQLiteデータベース接続
