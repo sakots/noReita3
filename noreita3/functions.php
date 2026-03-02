@@ -228,6 +228,25 @@ function zero_check($str): bool {
   return($str === 0 || $str === '0');
 }
 
+// ファイル存在チェック
+function check_file ($path): void {
+	$msg = initial_error_message();
+
+	if (!is_file($path)){
+		die(escape_char($path) . $msg['001']);
+	}
+	if (!is_readable($path)){
+		die(escape_char($path) . $msg['002']);
+	}
+}
+function initial_error_message(): array {
+	global $en;
+	$msg['001']=$en ? ' does not exist.':'がありません。';
+	$msg['002']=$en ? ' is not readable.':'を読めません。';
+	$msg['003']=$en ? ' is not writable.':'を書けません。';
+return $msg;
+}
+
 //ディレクトリ作成
 function check_dir ($path): void {
 
