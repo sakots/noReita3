@@ -272,6 +272,8 @@ function check_dir ($path): void {
 
 //-------------------------------------------------
 
+// 初期化
+
 function init(): void {
   check_dir(__DIR__."/src");
   check_dir(__DIR__."/temp");
