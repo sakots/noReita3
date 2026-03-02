@@ -529,12 +529,5 @@ const PERMISSION_FOR_DIR = 0707; //初期値 0707
 
 // 変更しないでください
 
-// テンポラリ
-const TEMP_DIR = "temp/";
-// 画像
-const IMAGE_DIR = "img/";
-// サムネイル
-const THUMBNAIL_DIR = "thumbnail/";
-
 //設定ファイルバージョン
 const CONFIG_VER = 20251202;
