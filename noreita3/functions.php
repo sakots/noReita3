@@ -230,55 +230,55 @@ function zero_check($str): bool {
 
 // ファイル存在チェック
 function check_file ($path): void {
-	$msg = initial_error_message();
+  $msg = initial_error_message();
 
-	if (!is_file($path)){
-		die(escape_char($path) . $msg['001']);
-	}
-	if (!is_readable($path)){
-		die(escape_char($path) . $msg['002']);
-	}
+  if (!is_file($path)){
+    die(escape_char($path) . $msg['001']);
+  }
+  if (!is_readable($path)){
+    die(escape_char($path) . $msg['002']);
+  }
 }
 function initial_error_message(): array {
-	global $en;
-	$msg['001']=$en ? ' does not exist.':'がありません。';
-	$msg['002']=$en ? ' is not readable.':'を読めません。';
-	$msg['003']=$en ? ' is not writable.':'を書けません。';
-return $msg;
+  global $en;
+  $msg['001']=$en ? ' does not exist.':'がありません。';
+  $msg['002']=$en ? ' is not readable.':'を読めません。';
+  $msg['003']=$en ? ' is not writable.':'を書けません。';
+  return $msg;
 }
 
 //ディレクトリ作成
 function check_dir ($path): void {
 
-	$msg = initial_error_message();
+  $msg = initial_error_message();
 
-	if (!is_dir($path)) {
-		mkdir($path, PERMISSION_FOR_DIR);
-		chmod($path, PERMISSION_FOR_DIR);
-	}
-	if (!is_readable($path) || !is_writable($path)){
-		chmod($path, PERMISSION_FOR_DIR);
-	}
-	if (!is_dir($path)){
-		die(h($path) . $msg['001']);
-	}
-	if (!is_readable($path)){
-		die(h($path) . $msg['002']);
-	}
-	if (!is_writable($path)){
-		die(h($path) . $msg['003']);
-	}
+  if (!is_dir($path)) {
+    mkdir($path, PERMISSION_FOR_DIR);
+    chmod($path, PERMISSION_FOR_DIR);
+  }
+  if (!is_readable($path) || !is_writable($path)){
+    chmod($path, PERMISSION_FOR_DIR);
+  }
+  if (!is_dir($path)){
+    die(escape_char($path) . $msg['001']);
+  }
+  if (!is_readable($path)){
+    die(escape_char($path) . $msg['002']);
+  }
+  if (!is_writable($path)){
+    die(escape_char($path) . $msg['003']);
+  }
 }
 
 //-------------------------------------------------
 
 function init(): void {
   check_dir(__DIR__."/src");
-	check_dir(__DIR__."/temp");
-	check_dir(__DIR__."/thumbnail");
-	check_dir(__DIR__."/avif");
-	check_dir(__DIR__."/webp");
-	check_dir(__DIR__."/cache");
+  check_dir(__DIR__."/temp");
+  check_dir(__DIR__."/thumbnail");
+  check_dir(__DIR__."/avif");
+  check_dir(__DIR__."/webp");
+  check_dir(__DIR__."/cache");
 }
 
 //-------------------------------------------------
