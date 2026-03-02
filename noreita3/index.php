@@ -83,11 +83,6 @@ use eftec\bladeone\BladeOne;
 $views = __DIR__ . '/theme/' . THEME_DIR; // テンプレートフォルダ
 $cache = __DIR__ . '/cache'; // キャッシュフォルダ
 
-// キャッシュフォルダがなかったら作成
-if (!file_exists($cache)) {
-	mkdir($cache, PERMISSION_FOR_DIR);
-}
-
 $blade = new BladeOne($views, $cache, BladeOne::MODE_AUTO);
 // MODE_DEBUGだと開発モード MODE_AUTOが速い。
 $blade->pipeEnable = true; // パイプのフィルターを使えるようにする
