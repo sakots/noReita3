@@ -237,36 +237,37 @@ function init_sqlite_db(): void {
   try {
   $db = new PDO('sqlite:' . DATABASE_NAME . '.db');
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $db->exec("CREATE TABLE IF NOT EXISTS tlog (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    no INTEGER NOT NULL,
-    created TIMESTAMP,
-    modified TIMESTAMP,
-    thread VARCHAR(1),
-    sub TEXT,
-    name TEXT,
-    verified TEXT,
-    com TEXT,
-    url TEXT,
-    img_file TEXT,
-    img_w TEXT,
-    img_h TEXT,
-    thumbnail TEXT,
-    paint_time TEXT,
-    img_hash TEXT,
-    tool TEXT,
-    pch_file TEXT,
-    pch_ext TEXT,
-    time TEXT NOT NULL,
-    first_posted_time TEXT NOT NULL,
-    host TEXT,
-    user_id TEXT,
-    hash TEXT,
-    parent TEXT,
-    age INT,
-    hidden VARCHAR(1),
-    sodane INTEGER DEFAULT 0,
-    nsfw VARCHAR(1)
+  $db->exec("CREATE TABLE IF NOT EXISTS posts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT, --通しID
+    no INTEGER NOT NULL, --投稿番号
+    created TIMESTAMP, --投稿日時
+    modified TIMESTAMP, --更新日時
+    thread VARCHAR(1), --スレッドの先頭か 1or0
+    sub TEXT, --タイトル
+    name TEXT, --名前
+    verified VARCHAR(1), --認証ユーザーか 1or0
+    com TEXT, --コメント
+    url TEXT, --URL
+    img_file TEXT, --画像ファイル名
+    img_w TEXT, --画像の幅
+    img_h TEXT, --画像の高さ
+    thumbnail TEXT, --サムネイルファイル名
+    paint_time TEXT, --お絵かき時間
+    img_hash TEXT, --画像のハッシュ値
+    tool TEXT, --使用したお絵かきツール
+    pch_file TEXT, --動画ファイル名
+    pch_ext TEXT, --動画ファイルの拡張子
+    time TEXT NOT NULL, --絵の投稿にかかった時間
+    first_posted_time TEXT NOT NULL, --最初の投稿の時間
+    host TEXT, --ホスト名
+    user_id TEXT, --ユーザーID
+    hash TEXT, --パスワードのハッシュ値
+    parent TEXT, --親投稿のno
+    age INT, --age/sage記憶
+    hidden VARCHAR(1), --表示/非表示（管理者削除）
+    sodane INTEGER DEFAULT 0, --そうだね
+    nsfw VARCHAR(1), -- NSFWフラグ 1or0
+    threshold VARCHAR(1) --そろそろ消えるマーク 1or0
   )");
   } catch (PDOException $e) {
     error('Database initialization failed: ' . $e->getMessage());
