@@ -141,6 +141,33 @@ $dat['board_name'] = BOARD_NAME;
 // データベース接続PDO
 define('DB_PDO', 'sqlite:' . DATABASE_NAME . '.db');
 
+$mode = (string)filter_input_data('POST','mode');
+$mode = $mode ?: (string)filter_input_data('GET','mode');
+
+$resno = (int)filter_input_data('GET','resno',FILTER_VALIDATE_INT);
+$https_only = (bool)($_SERVER['HTTPS'] ?? '');
+
+//user-codeの発行
+$usercode = t(filter_input_data('COOKIE', 'usercode')); //user-codeを取得
+
+$usercode = $usercode ?: $session_usercode;
+if(!$usercode){ //user-codeがなければ発行
+	$userip = get_uip();
+	$usercode = hash('sha256', $userip.random_bytes(16));
+}
+setcookie("usercode", $usercode, time()+(86400*365),"","",$https_only,true); //1年間
+$_SESSION['usercode'] = $usercode;
+
+$x_frame_options_deny = $x_frame_options_deny ?? true;
+if($x_frame_options_deny){
+	header("Content-Security-Policy: frame-ancestors 'none';");
+}
+//ダークモード
+if(!isset($_COOKIE["p_n_set_darkmode"])&&$darkmode_by_default){
+	setcookie("p_n_set_darkmode","1",time()+(60*60*24*180),"","",$https_only,true);
+}
+
+
 // 初期設定
 init();
 
