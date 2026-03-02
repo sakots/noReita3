@@ -228,6 +228,29 @@ function zero_check($str): bool {
   return($str === 0 || $str === '0');
 }
 
+//ディレクトリ作成
+function check_dir ($path): void {
+
+	$msg = initial_error_message();
+
+	if (!is_dir($path)) {
+			mkdir($path, PERMISSION_FOR_DIR);
+			chmod($path, PERMISSION_FOR_DIR);
+	}
+	if (!is_readable($path) || !is_writable($path)){
+		chmod($path, PERMISSION_FOR_DIR);
+	}
+	if (!is_dir($path)){
+		die(h($path) . $msg['001']);
+	}
+	if (!is_readable($path)){
+		die(h($path) . $msg['002']);
+	}
+	if (!is_writable($path)){
+		die(h($path) . $msg['003']);
+	}
+}
+
 //-------------------------------------------------
 
 function init(): void {
