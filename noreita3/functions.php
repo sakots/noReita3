@@ -172,18 +172,18 @@ function filter_input_data(string $input, string $key, int $filter=0) {
 
 /* テンポラリ内のゴミ除去 */
 function del_temp(): void {
-	$handle = opendir(TEMP_DIR);
+	$handle = opendir("./temp/");
 	while ($file = readdir($handle)) {
 		if (!is_dir($file)) {
-			$lapse = time() - filemtime(TEMP_DIR . $file);
+			$lapse = time() - filemtime("./temp/" . $file);
 			if ($lapse > (14 * 24 * 3600)) {
-				safe_unlink(TEMP_DIR . $file);
+				safe_unlink("./temp/" . $file);
 			}
 			//pchアップロードペイントファイル削除
 			if (preg_match("/\A(pchup-.*-tmp\.s?pch)\z/i", $file)) {
-				$lapse = time() - filemtime(TEMP_DIR . $file);
+				$lapse = time() - filemtime("./temp/" . $file);
 				if ($lapse > (300)) { //5分
-					safe_unlink(TEMP_DIR . $file);
+					safe_unlink("./temp/" . $file);
 				}
 			}
 		}
@@ -226,6 +226,17 @@ function escape_char($str) :string{
 // 0 または "0" かどうか
 function zero_check($str): bool {
   return($str === 0 || $str === '0');
+}
+
+//-------------------------------------------------
+
+function init(): void {
+  check_dir(__DIR__."/src");
+	check_dir(__DIR__."/temp");
+	check_dir(__DIR__."/thumbnail");
+	check_dir(__DIR__."/log");
+	check_dir(__DIR__."/webp");
+	check_dir(__DIR__."/cache");
 }
 
 //-------------------------------------------------
