@@ -253,8 +253,8 @@ function check_dir ($path): void {
 	$msg = initial_error_message();
 
 	if (!is_dir($path)) {
-			mkdir($path, PERMISSION_FOR_DIR);
-			chmod($path, PERMISSION_FOR_DIR);
+		mkdir($path, PERMISSION_FOR_DIR);
+		chmod($path, PERMISSION_FOR_DIR);
 	}
 	if (!is_readable($path) || !is_writable($path)){
 		chmod($path, PERMISSION_FOR_DIR);
