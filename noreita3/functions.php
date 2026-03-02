@@ -257,7 +257,7 @@ function init(): void {
   check_dir(__DIR__."/src");
 	check_dir(__DIR__."/temp");
 	check_dir(__DIR__."/thumbnail");
-	check_dir(__DIR__."/log");
+	check_dir(__DIR__."/avif");
 	check_dir(__DIR__."/webp");
 	check_dir(__DIR__."/cache");
 }
