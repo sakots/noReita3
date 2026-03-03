@@ -99,7 +99,7 @@ $mode = $mode ? $mode :(string)filter_input_data('GET','mode');
 $resno = (int)filter_input_data('GET','resno',FILTER_VALIDATE_INT);
 $https_only = (bool)($_SERVER['HTTPS'] ?? '');
 // user-codeの発行
-$user_code = t(filter_input_data('COOKIE', 'user_code')); //user-codeを取得
+$user_code = delete_tab(filter_input_data('COOKIE', 'user_code')); //user-codeを取得
 
 $dat['ver'] = REITA_VER;
 $dat['lot'] = REITA_LOT;
@@ -143,7 +143,7 @@ $resno = (int)filter_input_data('GET','resno',FILTER_VALIDATE_INT);
 $https_only = (bool)($_SERVER['HTTPS'] ?? '');
 
 //user-codeの発行
-$usercode = t(filter_input_data('COOKIE', 'usercode')); //user-codeを取得
+$usercode = delete_tab(filter_input_data('COOKIE', 'usercode')); //user-codeを取得
 
 $usercode = $usercode ?: $session_usercode;
 if(!$usercode){ //user-codeがなければ発行
@@ -161,7 +161,6 @@ $_SESSION['usercode'] = $usercode;
 if(!isset($_COOKIE["set_darkmode"])&&$darkmode_by_default){
 	setcookie("set_darkmode","1",time()+(60*60*24*180),"","",$https_only,true);
 }
-
 
 // 初期設定
 init();
@@ -255,3 +254,23 @@ switch($mode){
 		return view();
 }
 
+// 投稿
+function post(): void {
+  global $max_log,$max_res,$use_upload,$use_res_upload,$use_diary,$max_w,$max_h,$mark_sensitive_image;
+	global $allow_comments_only,$res_max_w,$res_max_h,$name_input_required,$max_com,$max_px,$sage_all,$en,$only_admin_can_reply;
+	global $usercode,$use_url_input_field,$https_only;
+
+  check_same_origin();
+
+  if($en) {
+    $error_message = 'An error occurred while posting.';
+  } else {
+    $error_message = '投稿中にエラーが発生しました。';
+  }
+
+  try {
+    save::post();
+  } catch (Exception $e) {
+    error($error_message . ' ' . $e->getMessage());
+  }
+}
