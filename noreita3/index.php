@@ -147,8 +147,8 @@ $usercode = delete_tab(filter_input_data('COOKIE', 'usercode')); //user-codeを�
 
 $usercode = $usercode ?: $session_usercode;
 if(!$usercode){ //user-codeがなければ発行
-	$userip = get_uip();
-	$usercode = hash('sha256', $userip.random_bytes(16));
+  $userip = get_uip();
+  $usercode = hash('sha256', $userip.random_bytes(16));
 }
 setcookie("usercode", $usercode, time()+(86400*365),"","",$https_only,true); //1年間
 $_SESSION['usercode'] = $usercode;
@@ -159,7 +159,7 @@ $_SESSION['usercode'] = $usercode;
 //}
 //ダークモード
 if(!isset($_COOKIE["set_darkmode"])&&$darkmode_by_default){
-	setcookie("set_darkmode","1",time()+(60*60*24*180),"","",$https_only,true);
+  setcookie("set_darkmode","1",time()+(60*60*24*180),"","",$https_only,true);
 }
 
 // 初期設定
@@ -170,107 +170,96 @@ del_temp();
 
 // mode
 switch($mode){
-	case 'regist':
-		if($deny_all_posts){
-			return view();
-		}
-		return post();
-	case 'paint':
-		return paint();
-	case 'paint_com':
-		return paint_com();
-	case 'pch_view':
-		return pch_view();
-	case 'to_continue':
-		return to_continue();
-	case 'cont_paint':
-		$type = (string)filter_input_data('POST', 'type');
-		if($type==='rep'||$password_require_to_continue){
-			check_cont_pass();
-		} 
-		return paint();
-	case 'set_app_select_enabled_session':
-		return set_app_select_enabled_session();
-	case 'pic_rep':
-		return img_replace();
-	case 'before_del':
-		return confirmation_before_deletion();
-	case 'edit_form':
-		return edit_form();
-	case 'edit':
-		return edit();
-	case 'del':
-		return del();
-	case 'user_del':
-		return user_del_mode();
-	case 'admin_in':
-		return admin_in();
-	case 'admin_del':
-		return admin_del();
-	case 'admin_post':
-		return admin_post();
-	case 'aikotoba':
-		return aikotoba();
-	case 'age_check':
-		return age_check();
-	case 'view_nsfw':
-		return view_nsfw();
-	case 'set_nsfw_show_hide':
-		return set_nsfw_show_hide();
-	case 'set_darkmode':
-		return set_darkmode();
-	case 'logout_admin':
-		return logout_admin();
-	case 'logout':
-		return logout();
-	case 'set_share_server':
-		return sns_share::set_share_server();
-	case 'post_share_server':
-		return sns_share::post_share_server();
-	case 'before_misskey_note':
-		return misskey_note::before_misskey_note();
-	case 'misskey_note_edit_form':
-		return misskey_note::misskey_note_edit_form();
-	case 'create_misskey_note_sessiondata':
-		return misskey_note::create_misskey_note_sessiondata();
-	case 'create_misskey_authrequesturl':
-		return misskey_note::create_misskey_authrequesturl();
-	case 'misskey_success':
-		return misskey_note::misskey_success();
-	case 'saveimage':
-		return saveimage();
-	case 'search':
-		return processsearch::search();
-	case 'catalog':
-		return catalog();
-	case 'download':
-		return download_app_dat();
-	case '':
-		if($resno){
-			return res();
-		}
-		return view();
-	default:
-		return view();
+  case 'regist':
+  if($deny_all_posts){
+    return view();
+  }
+  return post();
+  case 'paint':
+  return paint();
+  case 'paint_com':
+  return paint_com();
+  case 'pch_view':
+  return pch_view();
+  case 'to_continue':
+  return to_continue();
+  case 'cont_paint':
+  $type = (string)filter_input_data('POST', 'type');
+  if($type==='rep'||$password_require_to_continue){
+    check_cont_pass();
+  }
+  return paint();
+  case 'set_app_select_enabled_session':
+  return set_app_select_enabled_session();
+  case 'pic_rep':
+  return img_replace();
+  case 'before_del':
+  return confirmation_before_deletion();
+  case 'edit_form':
+  return edit_form();
+  case 'edit':
+  return edit();
+  case 'del':
+  return del();
+  case 'user_del':
+  return user_del_mode();
+  case 'admin_in':
+  return admin_in();
+  case 'admin_del':
+  return admin_del();
+  case 'admin_post':
+  return admin_post();
+  case 'aikotoba':
+  return aikotoba();
+  case 'age_check':
+  return age_check();
+  case 'view_nsfw':
+  return view_nsfw();
+  case 'set_nsfw_show_hide':
+  return set_nsfw_show_hide();
+  case 'set_darkmode':
+  return set_darkmode();
+  case 'logout_admin':
+  return logout_admin();
+  case 'logout':
+  return logout();
+  case 'set_share_server':
+  return sns_share::set_share_server();
+  case 'post_share_server':
+  return sns_share::post_share_server();
+  case 'before_misskey_note':
+  return misskey_note::before_misskey_note();
+  case 'misskey_note_edit_form':
+  return misskey_note::misskey_note_edit_form();
+  case 'create_misskey_note_sessiondata':
+  return misskey_note::create_misskey_note_sessiondata();
+  case 'create_misskey_authrequesturl':
+  return misskey_note::create_misskey_authrequesturl();
+  case 'misskey_success':
+  return misskey_note::misskey_success();
+  case 'saveimage':
+  return saveimage();
+  case 'search':
+  return processsearch::search();
+  case 'catalog':
+  return catalog();
+  case 'download':
+  return download_app_dat();
+  case '':
+  if($resno){
+    return res();
+  }
+  return view();
+  default:
+  return view();
 }
 
 // 投稿
 function post(): void {
-  global $max_log,$max_res,$use_upload,$use_res_upload,$use_diary,$max_w,$max_h,$mark_sensitive_image;
-	global $allow_comments_only,$res_max_w,$res_max_h,$name_input_required,$max_com,$max_px,$sage_all,$en,$only_admin_can_reply;
-	global $usercode,$use_url_input_field,$https_only;
 
-  check_same_origin();
+}
 
-  if($en) {
-    $error_message = 'An error occurred while posting.';
-  } else {
-    $error_message = '投稿中にエラーが発生しました。';
-  }
+// 通常表示
+function view(): void {
 
-  try {
-    save::post();
-  } catch (Exception $e) {
-    error($error_message . ' ' . $e->getMessage());
-  }
 }
