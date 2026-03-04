@@ -183,10 +183,10 @@ switch($mode){
   return pch_view();
   case 'to_continue':
   return to_continue();
-  case 'cont_paint':
+  case 'continue_paint':
   $type = (string)filter_input_data('POST', 'type');
-  if($type==='rep'||$password_require_to_continue){
-    check_cont_pass();
+  if($type === 'rep'||$password_require_to_continue){
+    check_continue_pass();
   }
   return paint();
   case 'set_app_select_enabled_session':
@@ -261,5 +261,5 @@ function post(): void {
 
 // 通常表示
 function view(): void {
-
+  global $use_upload,$home,$pagedef,$dispres,$allow_comments_only,$skindir,$descriptions,$max_kb,$root_url,$use_misskey_note;
 }
