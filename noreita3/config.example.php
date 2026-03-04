@@ -35,7 +35,7 @@ const ROOT_URL = "http://example.com/oekaki/";
 
 // 名前を必須にする
 // する: 1 しない: 0
-const NAME_INPUT_REQUIRED = 1;
+const NAME_INPUT_REQUIRED = 0;
 
 // 名前が必須でないときのデフォルトの名前
 const DEFAULT_NAME = "名無しさん";
