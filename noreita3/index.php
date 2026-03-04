@@ -261,5 +261,7 @@ function post(): void {
 
 // 通常表示
 function view(): void {
-  global $use_upload,$home,$pagedef,$dispres,$allow_comments_only,$skindir,$descriptions,$max_kb,$root_url,$use_misskey_note;
+  global $dat;
+  
+  set_page_context_to_session();
 }

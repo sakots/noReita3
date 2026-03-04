@@ -270,6 +270,24 @@ function check_dir ($path): void {
   }
 }
 
+//ページのコンテキストをセッションに保存
+function set_page_context_to_session(){
+  session_sta();
+  // セッションに保存
+  $_SESSION['current_page_context'] = [
+    'page' => (int)filter_input_data('GET', 'page', FILTER_VALIDATE_INT),
+    'resno' => filter_input_data('GET', 'resno', FILTER_VALIDATE_INT), // 未設定時はnull。intでキャストしない事。
+    'catalog' => (bool)(filter_input_data('GET', 'mode') === 'catalog'),
+    'res_catalog' => (bool)filter_input_data('GET', 'res_catalog', FILTER_VALIDATE_BOOLEAN),
+    'misskey_note' => (bool)filter_input_data('GET', 'misskey_note', FILTER_VALIDATE_BOOLEAN),
+    'search' => (bool)(filter_input_data('GET', 'mode') === 'search'),
+    'radio' => (int)filter_input_data('GET', 'radio', FILTER_VALIDATE_INT),
+    'imgsearch' => (bool)filter_input_data('GET', 'imgsearch', FILTER_VALIDATE_BOOLEAN),
+    'q' => (string)filter_input_data('GET', 'q'),
+  ];
+  $_SESSION['current_resid'] = null;
+}
+
 //-------------------------------------------------
 
 // 初期化
