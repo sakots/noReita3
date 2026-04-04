@@ -5,7 +5,7 @@
 //--------------------------------------------------
 
 //スクリプトのバージョン
-define('REITA_VER', 'v2.3.3'); //lot.260404.0
+define('REITA_VER', 'v3.0.0'); //lot.260405.0
 
 //言語判定
 $lang = ($http_langs = $_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '')
@@ -29,7 +29,7 @@ if(!isset($functions_ver) || $functions_ver < 20250610) {
 check_file(__DIR__.'/config.php');
 require(__DIR__ . '/config.php');
 //コンフィグのバージョンが古くて互換性がない場合動かさせない
-if (CONF_VER < 20251112 || !defined('CONF_VER')) {
+if (CONF_VER < 20260405 || !defined('CONF_VER')) {
   die($en ? 'The configuration file is incompatible. Please reconfigure it.' : 'コンフィグファイルに互換性がないようです。再設定をお願いします。');
 }
 
@@ -773,12 +773,12 @@ function regist(): void {
 	} catch (PDOException $e) {
 		echo "DB接続エラー:" . $e->getMessage();
 	}
-	if ($th_cnt > LOG_MAX_T) {
+	if ($th_cnt > MAX_THREAD) {
 		logdel();
 	}
 
 	//そろそろ消えるスレッドのフラグを設定
-	$thid = (int)round(LOG_MAX_T * LOG_LIMIT / 100); //閾値 … 新しい方からこの件数以降がもうすぐ消える
+	$thid = (int)round(MAX_THREAD * LOG_LIMIT / 100); //閾値 … 新しい方からこの件数以降がもうすぐ消える
 	if ($th_cnt > $thid) {
 		// そろそろ消えるスレッドにshdフラグを設定
 		try {
@@ -797,7 +797,7 @@ function regist(): void {
 
 	// そろそろ消えるスレッドの情報をテンプレートに渡す
 	$dat['log_limit'] = LOG_LIMIT;
-	$dat['log_max_t'] = LOG_MAX_T;
+	$dat['MAX_THREAD'] = MAX_THREAD;
 	$dat['th_cnt'] = $th_cnt;
 	$dat['thid'] = $thid;
 	$dat['will_delete_count'] = max(0, $th_cnt - $thid);
@@ -1169,7 +1169,7 @@ function def(): void {
 	} catch (PDOException $e) {
 		echo "DB接続エラー:" . $e->getMessage();
 	}
-	if ($th_cnt > LOG_MAX_T) {
+	if ($th_cnt > MAX_THREAD) {
 		logdel();
 	}
 
