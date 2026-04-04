@@ -77,7 +77,7 @@ $blade->pipeEnable = true; // パイプのフィルターを使えるように�
 $dat = array(); // bladeに格納する変数
 
 //CheerpJ 4.1
-define('CHEERPJ_URL','https://cjrtnc.leaningtech.com/4.1/loader.js');
+const CHEERPJ_URL = 'https:;//cjrtnc.leaningtech.com/4.1/loader.js';
 
 $dat['cheerpj_url'] = CHEERPJ_URL;
 
@@ -86,9 +86,6 @@ $dat['cheerpj_url'] = CHEERPJ_URL;
 //絶対パス取得
 $path = realpath("./") . '/' . IMG_DIR;
 $temp_path = realpath("./") . '/' . TEMP_DIR;
-
-define('IMG_PATH', $path);
-define('TMP_PATH', $temp_path);
 
 $message = "";
 $self = PHP_SELF;
@@ -162,7 +159,7 @@ $dat['sodane'] = SODANE;
 $dat['use_oekaki_reply'] = USE_OEKAKI_REPLY;
 
 //ペイント画面の$pwdの暗号化
-define('CRYPT_METHOD', 'aes-128-cbc');
+const CRYPT_METHOD = 'aes-128-cbc';
 define('CRYPT_IV', 'T3pkYxNyjN7Wz3pu'); //半角英数16文字
 
 //テーマがXHTMLか設定されてないなら
@@ -176,7 +173,7 @@ defined('USE_NSFW') or define('USE_NSFW', 1);
 $dat['use_nsfw'] = USE_NSFW;
 
 //データベース接続PDO
-define('DB_PDO', 'sqlite:' . DB_NAME . '.db');
+const DB_PDO = 'sqlite:' . DB_NAME . '.db';
 
 defined("SNS_WINDOW_WIDTH") or define("SNS_WINDOW_WIDTH","600");
 defined("SNS_WINDOW_HEIGHT") or define("SNS_WINDOW_HEIGHT","600");
