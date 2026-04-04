@@ -5,9 +5,9 @@
 	<meta charset="utf-8">
 	<title>{{$btitle}}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="theme/{{$themedir}}/luminous/luminous-basic.min.css">
+	<link rel="stylesheet" href="theme/{{$theme_dir}}/luminous/luminous-basic.min.css">
 	@include('monoreita_headcss')
-	<script src="theme/{{$themedir}}/js/sodane.js"></script>
+	<script src="theme/{{$theme_dir}}/js/sodane.js"></script>
 </head>
 
 <body>
@@ -369,7 +369,7 @@
 			});
 		</script>
 		<!-- Luminous -->
-		<script src="theme/{{$themedir}}/luminous/luminous.min.js"></script>
+		<script src="theme/{{$theme_dir}}/luminous/luminous.min.js"></script>
 		<script>
 			new LuminousGallery(document.querySelectorAll('.luminous'), {closeTrigger: "click", closeWithEscape: true});
 		</script>

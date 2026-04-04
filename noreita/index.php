@@ -48,7 +48,7 @@ if(!isset($save_inc_ver)||$save_inc_ver < 20250918) {
 }
 
 //テーマ
-require(__DIR__ . '/theme/' . THEMEDIR . '/theme_conf.php');
+require(__DIR__ . '/theme/' . THEME_DIR . '/theme_conf.php');
 
 //タイムゾーン設定
 date_default_timezone_set(DEFAULT_TIMEZONE);
@@ -63,7 +63,7 @@ if ($admin_pass === 'admin_pass') {
 include(__DIR__ . '/BladeOne/lib/BladeOne.php');
 use eftec\bladeone\BladeOne;
 
-$views = __DIR__ . '/theme/' . THEMEDIR; // テンプレートフォルダ
+$views = __DIR__ . '/theme/' . THEME_DIR; // テンプレートフォルダ
 $cache = __DIR__ . '/cache'; // キャッシュフォルダ
 
 //キャッシュフォルダがなかったら作成
@@ -119,7 +119,7 @@ $dat['max_sub'] = MAX_SUB;
 $dat['max_url'] = MAX_URL;
 $dat['max_com'] = MAX_COM;
 
-$dat['themedir'] = THEMEDIR;
+$dat['theme_dir'] = THEME_DIR;
 $dat['tname'] = THEME_NAME;
 $dat['tver'] = THEME_VER;
 

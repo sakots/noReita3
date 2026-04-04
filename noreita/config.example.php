@@ -17,12 +17,11 @@ $admin_name = '管理人';
 //最大スレッド数
 //古いスレッドから順番に消えます
 const MAX_THREAD = 1000;
-define('LOG_MAX_T', 600);
 
 //テーマ(テンプレート)のディレクトリ名。'/'は不要。
 //別のディレクトリにしたい場合は設定してください。
 //初期値は monoreita です。色選択のないmonorもあります。
-define('THEMEDIR', 'monoreita');
+const THEME_DIR = 'monoreita';
 
 //設置URL phpのあるディレクトリの'/'まで
 //シェアボタンなどで使用
