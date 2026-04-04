@@ -101,7 +101,7 @@ $dat['axnos_dir'] = AXNOS_DIR;
 
 $dat['ver'] = REITA_VER;
 $dat['base'] = BASE;
-$dat['btitle'] = TITLE;
+$dat['board_title'] = TITLE;
 $dat['home'] = HOME;
 $dat['self'] = PHP_SELF;
 $dat['message'] = $message;

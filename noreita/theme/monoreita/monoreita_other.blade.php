@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>{{$btitle}}</title>
+	<title>{{$board_title}}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	@include('monoreita_headcss')
 	{{-- ok画面専用ヘッダ --}}
@@ -14,7 +14,7 @@
 
 <body>
 	<header>
-		<h1><a href="{{$self}}">{{$btitle}}</a></h1>
+		<h1><a href="{{$self}}">{{$board_title}}</a></h1>
 		<div>
 			<a href="{{$home}}" target="_top">[ホーム]</a>
 			<a href="{{$self}}?mode=admin_in">[管理モード]</a>

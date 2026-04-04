@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>{{$btitle}}</title>
+	<title>{{$board_title}}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="theme/{{$theme_dir}}/luminous/luminous-basic.min.css">
 	@include('monoreita_headcss')
@@ -12,7 +12,7 @@
 
 <body>
 	<header id="header">
-		<h1><a href="{{$self}}">{{$btitle}}</a></h1>
+		<h1><a href="{{$self}}">{{$board_title}}</a></h1>
 		<div>
 			<a href="{{$home}}" target="_top">[ホーム]</a>
 			<a href="{{$self}}?mode=admin_in">[管理モード]</a>
@@ -260,7 +260,7 @@
 							<span class="eva--share-outline"></span> SNSで共有する</a>
 						</span>
 						@else
-						<span class="button"><a href="https://x.com/intent/tweet?&amp;text=%5B{{$bbsline['tid']}}%5D%20{{$bbsline['sub']}}%20by%20{{$bbsline['a_name']}}%20-%20{{$btitle}}&amp;url={{$base}}{{$self}}?mode=res%26res={{$bbsline['tid']}}" target="_blank">
+						<span class="button"><a href="https://x.com/intent/tweet?&amp;text=%5B{{$bbsline['tid']}}%5D%20{{$bbsline['sub']}}%20by%20{{$bbsline['a_name']}}%20-%20{{$board_title}}&amp;url={{$base}}{{$self}}?mode=res%26res={{$bbsline['tid']}}" target="_blank">
 							<span class="ri--twitter-x-line"></span> tweet</a>
 						</span>
 						@endif
