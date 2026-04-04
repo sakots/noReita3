@@ -197,7 +197,7 @@ class misskey_note {
 		$admin_post = admin_post_valid();
 		$admin_del = admin_del_valid();
 
-		$dat['pwdc'] = (string)filter_input_data('COOKIE', 'pwdc');
+		$dat['pwd_cookie'] = (string)filter_input_data('COOKIE', 'pwd_cookie');
 		$dat['no'] = t(filter_input_data('POST', 'no', FILTER_VALIDATE_INT));
 		$dat['no'] = $dat['no'] ? $dat['no'] : t(filter_input_data('GET', 'no', FILTER_VALIDATE_INT));
 
@@ -246,8 +246,8 @@ class misskey_note {
 		$dat['admin'] = ($dat['admin_del'] || $dat['admin_post']);
 
 		$pwd = (string)filter_input_data('POST', 'pwd');
-		$pwdc = (string)filter_input_data('COOKIE', 'pwdc');
-		$pwd = $pwd ? $pwd : $pwdc;
+		$pwd_cookie = (string)filter_input_data('COOKIE', 'pwd_cookie');
+		$pwd = $pwd ? $pwd : $pwd_cookie;
 
 		$id_and_no = (string)filter_input_data('POST', 'id_and_no');
 

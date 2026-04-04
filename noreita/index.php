@@ -190,7 +190,7 @@ $message = "";
 
 //var_dump($_COOKIE);
 
-$pwdc = filter_input(INPUT_COOKIE, 'pwdc');
+$pwd_cookie = filter_input(INPUT_COOKIE, 'pwd_cookie');
 $usercode = filter_input(INPUT_COOKIE, 'usercode'); //nullならuser-codeを発行
 
 //$_SERVERから変数を取得
@@ -741,7 +741,7 @@ function regist(): void {
 			$c_pass = $pwd;
 			//-- クッキー保存 --
 			//クッキー項目："クッキー名 クッキー値"
-			$cookies = [["namec",$original_name],["emailc",$mail] , ["urlc", $url], ["pwdc", $c_pass] ,[ "palettec" , $pal]];
+			$cookies = [["namec",$original_name],["emailc",$mail] , ["urlc", $url], ["pwd_cookie", $c_pass] ,[ "palettec" , $pal]];
 			foreach ($cookies as $cookie) {
 				list($c_name, $c_cookie) = $cookie;
 				$c_name = (string)$c_name;
@@ -1128,7 +1128,7 @@ function reply(): void {
 			$c_pass = $pwd;
 			//-- クッキー保存 --
 			//クッキー項目："クッキー名 クッキー値"
-			$cookies = [["namec",$original_name],["emailc",$mail] , ["urlc", $url], ["pwdc", $c_pass]];
+			$cookies = [["namec",$original_name],["emailc",$mail] , ["urlc", $url], ["pwd_cookie", $c_pass]];
 			foreach ($cookies as $cookie) {
 				list($c_name, $c_cookie) = $cookie;
 				$c_name = (string)$c_name;
