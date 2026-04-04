@@ -146,7 +146,7 @@ $dat['use_sub'] = USE_SUB;
 
 $dat['addinfo'] = $addinfo;
 
-$dat['dptime'] = DSP_PAINTTIME;
+$dat['display_painttime'] = DSP_PAINTTIME;
 
 $dat['share_button'] = SHARE_BUTTON;
 

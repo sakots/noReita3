@@ -93,7 +93,7 @@
 				<figure>
 					<img src="{{$path}}{{$bbsline['picfile']}}">
 					<figcaption>{{$bbsline['picfile']}}
-						@if ($dptime)
+						@if ($display_painttime)
 						@if ($bbsline['psec'] != null)
 						描画時間：{{$bbsline['utime']}}
 						@endif

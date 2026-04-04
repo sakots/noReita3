@@ -140,7 +140,7 @@
 						</a></span>
 					</h4>
 					@if ($bbsline['picfile'])
-					@if ($dptime)
+					@if ($display_painttime)
 					<h5>
 						{{$bbsline['tool']}} ({{$bbsline['img_w']}}x{{$bbsline['img_h']}})
 						@if ($bbsline['psec'] != null)
@@ -212,7 +212,7 @@
 									</a></span>
 								</h4>
 								@if ($res['picfile'])
-								@if ($dptime)
+								@if ($display_painttime)
 								<h5>
 									{{$res['tool']}} ({{$res['img_w']}}x{{$res['img_h']}})
 									@if ($res['psec'] != null)
