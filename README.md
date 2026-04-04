@@ -9,7 +9,7 @@
 ![License](https://img.shields.io/github/license/sakots/noReita3)
 
 - SQLiteを利用したスレッド式の画像掲示板です。
-- PaintBBS NEO,tegaki.js,ChickenPaint,Klecksが使えるお絵かき掲示板です。
+- PaintBBS NEO,tegaki.js,Litachix,Klecksが使えるお絵かき掲示板です。
 
 ---
 
@@ -33,9 +33,9 @@
 
 - 設置するサーバのPHPのバージョンが7.4以上になっている事を確認します。
 - [リリース](https://github.com/sakots/noReita3/releases/latest)のページから圧縮ファイルをダウンロードします。
-- `noReita3`フォルダ内の`config.example.php`を複製して`config.php`に名前変更、管理者パスワードを他の人にはわからないパスワードに変更します。（元のままでは動かないようにしてあります）
-- `noReita3`フォルダをアップロードします。
-- サーバ上の`noReita3`ディレクトリにブラウザでアクセスすると設置が完了します。
+- `noReita`フォルダ内の`config.example.php`を複製して`config.php`に名前変更、管理者パスワードを他の人にはわからないパスワードに変更します。（元のままでは動かないようにしてあります）
+- `noReita`フォルダをアップロードします。
+- サーバ上の`noReita`ディレクトリにブラウザでアクセスすると設置が完了します。
 
 ## 同梱のパレットについて
 
@@ -57,6 +57,10 @@ $pallets_dat = array(['標準','palette.txt'],['PCCS_HSL','p_PCCS.txt'],['マン
 などと加えてください。
 
 ## 履歴
+
+### [2026/04/05]
+
+- noReita2系からの移植に方向転換
 
 ### [2025/12/03]
 
