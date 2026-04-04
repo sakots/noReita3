@@ -35,8 +35,8 @@
 			<section class="epost">
 				<form action="{{$self}}" method="post" enctype="multipart/form-data">
 					<p>
-						<label>幅：<input class="form" type="number" min="300" max="{{$pmaxw}}" name="picw" value="{{$pdef_w}}" required></label>
-						<label>高さ：<input class="form" type="number" min="300" max="{{$pmaxh}}" name="pich" value="{{$pdefh}}" required></label>
+						<label>幅：<input class="form" type="number" min="300" max="{{$pmax_w}}" name="picw" value="{{$pdef_w}}" required></label>
+						<label>高さ：<input class="form" type="number" min="300" max="{{$pmax_h}}" name="pich" value="{{$pdef_h}}" required></label>
 						<input type="hidden" name="mode" value="paint">
 						<label for="tools">ツール</label>
 						<select name="tools" id="tools" onchange="togglePaletteVisibility()">
@@ -69,7 +69,7 @@
 				</form>
 				<ul>
 					<li>iPadやスマートフォンでも描けるお絵かき掲示板です。</li>
-					<li>お絵かきできるサイズは幅300～{{$pmaxw}}px、高さ300～{{$pmaxh}}pxです。</li>
+					<li>お絵かきできるサイズは幅300～{{$pmax_w}}px、高さ300～{{$pmax_h}}pxです。</li>
 					@foreach ($addinfo as $info) @if (!empty($info[$loop->index]))
 					<li>{!! $addinfo[$loop->index] !!}</li>
 					@endif @endforeach

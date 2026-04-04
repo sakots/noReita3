@@ -106,9 +106,9 @@ $dat['home'] = HOME;
 $dat['self'] = PHP_SELF;
 $dat['message'] = $message;
 $dat['pdef_w'] = PDEF_W;
-$dat['pdefh'] = PDEF_H;
-$dat['pmaxw'] = PMAX_W;
-$dat['pmaxh'] = PMAX_H;
+$dat['pdef_h'] = PDEF_H;
+$dat['pmax_w'] = PMAX_W;
+$dat['pmax_h'] = PMAX_H;
 
 $dat['max_name'] = MAX_NAME;
 $dat['max_email'] = MAX_EMAIL;
