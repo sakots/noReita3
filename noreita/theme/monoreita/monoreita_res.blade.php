@@ -71,7 +71,7 @@
 						@if ($bbsline['a_url'] == true)
 						<span class="url"><a href="{{$bbsline['a_url']}}" target="_blank" rel="nofollow noopener noreferrer">[URL]</a></span>
 						@endif
-						@if ($dispid == 1)
+						@if ($display_id == 1)
 						<span class="id">ID : {{$bbsline['id']}}</span>
 						@endif
 						<span class="sodane"><a href="{{$self}}?mode=sodane&amp;resto={{$bbsline['tid']}}">{{$sodane}}
@@ -132,7 +132,7 @@
 										@if ($res['a_url'])
 										<span class="url"><a href="{{$res['a_url']}}" target="_blank" rel="nofollow noopener noreferrer">[URL]</a></span>
 										@endif
-										@if ($dispid)
+										@if ($display_id)
 										<span class="id">ID：{{$res['id']}}</span>
 										@endif
 										<span class="sodane"><a href="{{$self}}?mode=sodane&amp;resto={{$res['tid']}}">{{$sodane}}

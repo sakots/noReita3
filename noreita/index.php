@@ -117,7 +117,7 @@ $dat['max_url'] = MAX_URL;
 $dat['max_com'] = MAX_COM;
 
 $dat['theme_dir'] = THEME_DIR;
-$dat['tname'] = THEME_NAME;
+$dat['theme_name'] = THEME_NAME;
 $dat['tver'] = THEME_VER;
 
 $dat['switch_sns'] = SWITCH_SNS;
@@ -131,7 +131,7 @@ $dat['use_axnos'] = USE_AXNOS;
 $dat['select_palettes'] = USE_SELECT_PALETTES;
 $dat['pallets_dat'] = $pallets_dat;
 
-$dat['dispid'] = DISP_ID;
+$dat['display_id'] = DISP_ID;
 $dat['updatemark'] = UPDATE_MARK;
 $dat['use_resub'] = USE_RESUB;
 
