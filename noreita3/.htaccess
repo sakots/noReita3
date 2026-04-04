@@ -1,6 +1,0 @@
-<files ~ "(?i)(^config\.php$|\.(ini|log|dat|json|inc|db)$)">
-	Require all denied
-</files>
-<Files "manifest.json">
-	Require all granted
-</Files>
