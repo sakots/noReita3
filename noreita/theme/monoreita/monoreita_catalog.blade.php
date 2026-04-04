@@ -33,7 +33,7 @@
 			<section class="epost">
 				<form action="{{$self}}" method="post" enctype="multipart/form-data">
 					<p>
-						<label>幅：<input class="form" type="number" min="300" max="{{$pmaxw}}" name="picw" value="{{$pdefw}}" required></label>
+						<label>幅：<input class="form" type="number" min="300" max="{{$pmaxw}}" name="picw" value="{{$pdef_w}}" required></label>
 						<label>高さ：<input class="form" type="number" min="300" max="{{$pmaxh}}" name="pich" value="{{$pdefh}}" required></label>
 						<input type="hidden" name="mode" value="paint">
 						<label for="tools">ツール</label>

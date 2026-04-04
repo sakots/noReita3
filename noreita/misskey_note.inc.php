@@ -444,7 +444,7 @@ class misskey_note {
 			curl_setopt($postCurl, CURLOPT_RETURNTRANSFER, true);
 			$postResponse = curl_exec($postCurl);
 			$postStatusCode = curl_getinfo($postCurl, CURLINFO_HTTP_CODE);
-			curl_close($postCurl);
+			// curl_close($postCurl);
 
 			// HTTPステータスコードが403の時は、トークン不一致と判断しアプリを認証
 			if ($postStatusCode === 403) {
