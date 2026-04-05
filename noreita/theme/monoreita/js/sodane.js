@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     // 元のテキストからそうだねの部分を抽出（最後の部分を除く）
                     const baseText = originalText.replace(/x\d+$|\+$/, '').trim();
 
-                    if (data.exid > 0) {
-                        this.innerHTML = baseText + ' x' + data.exid;
+                    if (data.sodane > 0) {
+                        this.innerHTML = baseText + ' x' + data.sodane;
                     } else {
                         this.innerHTML = baseText + ' +';
                     }
