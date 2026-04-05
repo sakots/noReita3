@@ -59,7 +59,7 @@ const USE_AXNOS = 1;
 
 // 初期設定のままの場合、reita.dbとなります。
 // 拡張子は.dbで固定です。
-const DB_NAME = 'reita3';
+const DB_NAME = 'reita';
 
 /* -------- お絵かきリプを使う -------- */
 
