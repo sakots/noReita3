@@ -35,6 +35,7 @@ function charconvert($str): string {
 /* NGワードがあれば拒絶 */
 function Reject_if_NGword_exists_in_the_post($com, $name, $email, $url, $sub): void {
 	global $badstring, $badname, $badstr_A, $badstr_B, $pwd, $admin_pass;
+	global $en;
 	//チェックする項目から改行・スペース・タブを消す
 	$chk_com  = preg_replace("/\s/u", "", $com);
 	$chk_name = preg_replace("/\s/u", "", $name);
@@ -44,34 +45,35 @@ function Reject_if_NGword_exists_in_the_post($com, $name, $email, $url, $sub): v
 	//本文に日本語がなければ拒絶
 	if (USE_JAPANESEFILTER) {
 		mb_regex_encoding("UTF-8");
-		if (strlen($com) > 0 && !preg_match("/[ぁ-んァ-ヶー一-龠]+/u", $chk_com)) error(MSG035);
+		if (strlen($com) > 0 && !preg_match("/[ぁ-んァ-ヶー一-龠]+/u", $chk_com)) error($en ? "Your comment must contain Japanese characters." : "コメントには日本語を含めてください。");
 	}
 
 	//本文へのURLの書き込みを禁止
 	if (!($pwd === $admin_pass)) { //どちらも一致しなければ
-		if (DENY_COMMENTS_URL && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036);
+		if (DENY_COMMENTS_URL && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error($en ? "URLs are not allowed in comments." : "コメントにはURLを含めることはできません。");
 	}
 
 	// 使えない文字チェック
 	if (is_ngword($badstring, [$chk_com, $chk_sub, $chk_name, $chk_email])) {
-		error(MSG032);
+		error($en ? "Invalid characters found in comment." : "コメントに無効な文字が含まれています。");
 	}
 
 	// 使えない名前チェック
 	if (is_ngword($badname, $chk_name)) {
-		error(MSG037);
+		error($en ? "Invalid name provided." : "無効な名前が使用されています。");
 	}
 
 	//指定文字列が2つあると拒絶
 	$bstr_A_find = is_ngword($badstr_A, [$chk_com, $chk_sub, $chk_name, $chk_email]);
 	$bstr_B_find = is_ngword($badstr_B, [$chk_com, $chk_sub, $chk_name, $chk_email]);
 	if ($bstr_A_find && $bstr_B_find) {
-		error(MSG032);
+		error($en ? "Invalid combination of characters found in comment." : "コメントに無効な文字の組み合わせが含まれています。");
 	}
 }
 
 //念のため画像タイプチェック
 function get_image_type($img_type, $dest = null): string {
+	global $en;
 	// 既にMIMEタイプが渡されている場合はそのまま使用
 	if (strpos($img_type, 'image/') === 0) {
 		$mime_type = $img_type;
@@ -91,7 +93,7 @@ function get_image_type($img_type, $dest = null): string {
 	if (isset($map[$mime_type])) {
 		return $map[$mime_type];
 	}
-	error(MSG004, $dest);
+	error($en ? "Invalid image type." : "無効な画像タイプです。", $dest);
 	return ''; // この行は実際には実行されないが、リンターを満足させるために必要
 }
 
