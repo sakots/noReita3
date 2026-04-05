@@ -1093,6 +1093,9 @@ function reply(): void {
 			//id生成
 			$id = gen_id($host, $utime ?? time());
 
+			//UUID生成
+			$uuid = generate_uuid();
+
 			//管理者名は管理パスじゃないと使えない
 			if ($name === $admin_name && $pwd !== $admin_pass) {
 				$name = $name . ADMIN_CAP;
@@ -1128,13 +1131,13 @@ function reply(): void {
 
 			//リプ処理
 			$thread = 0;
-			$sql = "INSERT INTO board_log (created, modified, thread, parent, comid, tree, a_name, sub, com, mail, a_url, picfile, pchfile, img_w, img_h, psec, utime, pwd, id, sodane, age, invz, host, tool, admins, ctype) VALUES (datetime('now', 'localtime'), datetime('now', 'localtime'), :thread, :parent, :comid, :tree, :a_name, :sub, :com, :mail, :a_url, :picfile, :pchfile, :img_w, :img_h, :psec, :utime, :pwdh, :id, :sodane, :age, :invz, :host, :used_tool, :admins, :ctype)";
+			$sql = "INSERT INTO board_log (created, modified, thread, parent, comid, tree, a_name, sub, com, mail, a_url, picfile, pchfile, img_w, img_h, psec, utime, pwd, id, sodane, age, invz, host, tool, admins, ctype, uuid) VALUES (datetime('now', 'localtime'), datetime('now', 'localtime'), :thread, :parent, :comid, :tree, :a_name, :sub, :com, :mail, :a_url, :picfile, :pchfile, :img_w, :img_h, :psec, :utime, :pwdh, :id, :sodane, :age, :invz, :host, :used_tool, :admins, :ctype, :uuid)";
 
 			// プレースホルダ
 			$stmt = $db->prepare($sql);
 			$stmt->execute(
 				[
-					'thread'=>$thread, 'parent'=>$parent, 'comid'=>$comid,'tree'=>$tree, 'a_name'=>$name,'sub'=>$sub,'com'=>$com,'mail'=>$mail,'a_url'=>$url,'picfile'=> $picfile,'pchfile'=> $pchfile, 'img_w'=>$img_w,'img_h'=> $img_h, 'psec'=>$psec,'utime'=> $utime,'pwdh'=> $pwdh,'id'=> $id,'sodane'=> $sodane,'age'=> $age,'invz'=> $invz,'host'=> $host,'used_tool'=> $used_tool,'admins'=> $admins,'ctype'=> $ctype,
+					'thread'=>$thread, 'parent'=>$parent, 'comid'=>$comid,'tree'=>$tree, 'a_name'=>$name,'sub'=>$sub,'com'=>$com,'mail'=>$mail,'a_url'=>$url,'picfile'=> $picfile,'pchfile'=> $pchfile, 'img_w'=>$img_w,'img_h'=> $img_h, 'psec'=>$psec,'utime'=> $utime,'pwdh'=> $pwdh,'id'=> $id,'sodane'=> $sodane,'age'=> $age,'invz'=> $invz,'host'=> $host,'used_tool'=> $used_tool,'admins'=> $admins,'ctype'=> $ctype,'uuid'=> $uuid,
 				]
 			);
 			//$db->exec($sql);
