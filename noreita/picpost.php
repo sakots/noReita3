@@ -253,7 +253,8 @@ if($sendheader){
 $userdata .= "\n";
 
 //CSRF
-if($usercode && $usercode !== filter_input(INPUT_COOKIE, 'usercode')){
+$cookie_usercode = filter_input(INPUT_COOKIE, 'usercode');
+if($usercode && $cookie_usercode && $usercode !== $cookie_usercode){
 	die("error\n{$errormsg_1}");
 }
 

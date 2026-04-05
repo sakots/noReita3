@@ -1994,14 +1994,14 @@ function paint_com($tmpmode): void {
 			$userdata = fread($fp, 1024);
 			fclose($fp);
 			list($uip, $uhost, $u_agent, $imgext, $ucode,, $starttime, $postedtime,, $tool) = explode("\t", rtrim($userdata) . "\t");
-			$file_name = preg_replace("/\.(dat)\z/i", "", $file); //拡張子除去
-			if (is_file(TEMP_DIR . $file_name . $imgext)) //画像があればリストに追加
+			$filename = preg_replace("/\.(dat)\z/i", "", $file); //拡張子除去
+			if (is_file(TEMP_DIR . $filename . $imgext)) //画像があればリストに追加
 				//描画時間を$userdataをもとに計算
 				//(表示用)
 				$utime = calcPtime((int)$postedtime - (int)$starttime);
 			//描画時間(内部用)
 			$psec = (int)$postedtime - (int)$starttime;
-			$tmp_list[] = $ucode . "\t" . $uip . "\t" . $file_name . $imgext . "\t" . $utime . "\t" . $psec . "\t" . $tool;
+			$tmp_list[] = $ucode . "\t" . $uip . "\t" . $filename . $imgext . "\t" . $utime . "\t" . $psec . "\t" . $tool;
 		}
 	}
 	closedir($handle);
@@ -2260,8 +2260,8 @@ function picreplace(): void {
 			$userdata = fread($fp, 1024);
 			fclose($fp);
 			list($uip, $uhost, $u_agent, $imgext, $ucode, $u_repcode, $starttime, $postedtime,, $tool) = explode("\t", rtrim($userdata) . "\t"); //区切りの"\t"を行末にして配列へ格納
-			$file_name = pathinfo($file, PATHINFO_FILENAME); //拡張子除去
-			if ($file_name && is_file(TEMP_DIR . $file_name . $imgext) && $u_repcode === $repcode) {
+			$filename = pathinfo($file, PATHINFO_FILENAME); //拡張子除去
+			if ($filename && is_file(TEMP_DIR . $filename . $imgext) && $u_repcode === $repcode) {
 				$find = true;
 				break;
 			}
@@ -2285,7 +2285,7 @@ function picreplace(): void {
 		// $flag = false;
 		if (password_verify($pwd_f, $msg_d["pwd"])) {
 			//パスワードがあってたら画像アップロード処理
-			$up_picfile = TEMP_DIR . $file_name . $imgext;
+			$up_picfile = TEMP_DIR . $filename . $imgext;
 			$dest = IMG_DIR . $stime . '.tmp';
 			copy($up_picfile, $dest);
 
@@ -2298,34 +2298,34 @@ function picreplace(): void {
 			$imgext = get_image_type($img_type, $dest);
 
 			//新しい画像の名前(DB保存用)
-			$new_picfile = $file_name . $imgext;
+			$new_picfile = $filename . $imgext;
 
 			chmod($dest, PERMISSION_FOR_DEST);
 			rename($dest, IMG_DIR . $new_picfile);
 
 			//ワークファイル削除
 			safe_unlink($up_picfile);
-			safe_unlink(TEMP_DIR . $file_name . ".dat");
+			safe_unlink(TEMP_DIR . $filename . ".dat");
 
 			//動画ファイルアップロード
 			//拡張子チェック
 			$pchext = '';
-			if (is_file(TEMP_DIR . $file_name . '.chi')) {
+			if (is_file(TEMP_DIR . $filename . '.chi')) {
 				$pchext = '.chi';
-			} elseif (is_file(TEMP_DIR . $file_name . '.spch')) {
+			} elseif (is_file(TEMP_DIR . $filename . '.spch')) {
 				$pchext = '.spch';
-			} elseif (is_file(TEMP_DIR . $file_name . '.pch')) {
+			} elseif (is_file(TEMP_DIR . $filename . '.pch')) {
 				$pchext = '.pch';
 			}
 			//元ファイル削除
 			safe_unlink(IMG_DIR . $msg_d["pchfile"]);
 
 			//新しい動画ファイルの名前(DB保存用)
-			$new_pchfile = $file_name . $pchext;
+			$new_pchfile = $filename . $pchext;
 
 			//動画ファイルアップロード本編
-			if (is_file(TEMP_DIR . $file_name . $pchext)) {
-				$pch_src = TEMP_DIR . $file_name . $pchext;
+			if (is_file(TEMP_DIR . $filename . $pchext)) {
+				$pch_src = TEMP_DIR . $filename . $pchext;
 				$dst = IMG_DIR . $new_pchfile;
 				if (copy($pch_src, $dst)) {
 					chmod($dst, PERMISSION_FOR_DEST);
