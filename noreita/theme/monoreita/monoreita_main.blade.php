@@ -112,7 +112,7 @@
 				</h3>
 				<section>
 					<h4 class="oya">
-						<span class="oyaname"><a href="{{$self}}?mode=search&amp;bubun=kanzen&amp;search={{$bbsline['a_name']}}">{{$bbsline['a_name']}}</a></span>
+						<span class="oyaname"><a href="{{$self}}?mode=search&amp;similar=kanzen&amp;search={{$bbsline['a_name']}}">{{$bbsline['a_name']}}</a></span>
 						@if ($bbsline['admins'] == 1)
 						<span class="mingcute--user-star-fill"></span>
 						@endif
@@ -306,8 +306,8 @@
 				<p>作者名/本文(ハッシュタグ)検索</p>
 				<form class="search" method="GET" action="{{$self}}">
 					<input type="hidden" name="mode" value="search">
-					<label><input type="radio" name="bubun" value="bubun">部分一致</label>
-					<label><input type="radio" name="bubun" value="kanzen">完全一致</label>
+					<label><input type="radio" name="similar" value="similar">部分一致</label>
+					<label><input type="radio" name="similar" value="kanzen">完全一致</label>
 					<label><input type="radio" name="tag" value="tag">本文(ハッシュタグ)</label>
 					<br>
 					<input type="text" name="search" placeholder="検索" size="20">
