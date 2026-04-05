@@ -219,11 +219,11 @@ class misskey_note {
 		$dat['token'] = get_csrf_token();
 
 		// nsfw
-		$dat['nsfwc'] = (bool)filter_input_data('COOKIE', 'nsfwc', FILTER_VALIDATE_BOOLEAN);
+		$dat['nsfw_c'] = (bool)filter_input_data('COOKIE', 'nsfw_c', FILTER_VALIDATE_BOOLEAN);
 		$dat['set_nsfw_show_hide'] = (bool)filter_input_data('COOKIE', 'p_n_set_nsfw_show_hide', FILTER_VALIDATE_BOOLEAN);
 
 		$dat['count_r_arr'] = count($dat['post']);
-		$dat['edit_mode'] = 'editmode';
+		$dat['edit_mode'] = 'edit_mode';
 
 		$admin_pass = null;
 
@@ -277,7 +277,7 @@ class misskey_note {
 		// Misskeyサーバーリストをセット
 		$dat['misskey_servers'] = $misskey_servers;
 
-		$dat['nsfwc'] = (bool)filter_input_data('COOKIE', 'nsfwc', FILTER_VALIDATE_BOOLEAN);
+		$dat['nsfw_c'] = (bool)filter_input_data('COOKIE', 'nsfw_c', FILTER_VALIDATE_BOOLEAN);
 		$dat['set_nsfw_show_hide'] = (bool)filter_input_data('COOKIE', 'p_n_set_nsfw_show_hide', FILTER_VALIDATE_BOOLEAN);
 
 		$page = $_SESSION['current_page_context']["page"] ?? 0;
