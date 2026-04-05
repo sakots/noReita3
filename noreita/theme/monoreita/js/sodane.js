@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault(); // デフォルトのリンク動作を無効化
 
             const href = this.getAttribute('href');
-            const resto = href.match(/resto=(\d+)/)[1];
 
             // ボタンを一時的に無効化
             this.style.pointerEvents = 'none';
@@ -24,32 +23,18 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // 成功時の処理
-                    const span = this.closest('.sodane');
                     const originalText = this.textContent.trim();
-
-                    // 元のテキストからそうだねの部分を抽出（最後の部分を除く）
-                    const baseText = originalText.replace(/x\d+$|\+$/, '').trim();
-
-                    if (data.sodane > 0) {
-                        this.innerHTML = baseText + ' x' + data.sodane;
-                    } else {
-                        this.innerHTML = baseText + ' +';
-                    }
-
-                    // 成功メッセージを表示（オプション）
-                    //showMessage('そうだねしました！', 'success');
+                    const baseText = originalText.replace(/\s*x\d+$|\s*\++$/, '').trim();
+                    const sodaneCount = parseInt(data.sodane) || 0;
+                    this.innerHTML = sodaneCount > 0 ? baseText + ' x' + sodaneCount : baseText + ' +';
                 } else {
-                    // エラー時の処理
                     showMessage(data.error || 'エラーが発生しました', 'error');
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
                 showMessage('通信エラーが発生しました', 'error');
             })
             .finally(() => {
-                // ボタンを再度有効化
                 this.style.pointerEvents = 'auto';
                 this.style.opacity = '1';
             });

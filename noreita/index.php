@@ -235,6 +235,9 @@ $_SESSION['usercode'] = $usercode;
 $mode = (string)filter_input_data('POST','mode');
 $mode = $mode ?: (string)filter_input_data('GET','mode');
 
+// Ajaxリクエストかどうかをチェック
+$is_ajax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+
 // モード
 
 switch ($mode) {
@@ -1500,14 +1503,14 @@ function sodane(): void {
 	try {
 		$db = new PDO(DB_PDO);
 		$db->exec("PRAGMA journal_mode=WAL;");
-		$stmt = $db->prepare("UPDATE board_log SET sodane = sodane + 1 WHERE tid = ?");
+		$stmt = $db->prepare("UPDATE board_log SET sodane = CAST((CAST(sodane AS INTEGER) + 1) AS TEXT) WHERE tid = ?");
 		$stmt->execute([$resto]);
 
 		// 更新後のそうだね数を取得
-		$stmt = $db->prepare("SELECT sodane FROM board_log WHERE tid = ?");
+		$stmt = $db->prepare("SELECT CAST(sodane AS INTEGER) as sodane FROM board_log WHERE tid = ?");
 		$stmt->execute([$resto]);
 		$result = $stmt->fetch();
-		$new_sodane = $result['sodane'] ?? 0;
+		$new_sodane = (int)($result['sodane'] ?? 0);
 
 		$db = null;
 
