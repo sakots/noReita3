@@ -341,8 +341,8 @@ function init(): void {
 				admins VARCHAR(1), --認証マーク
 				shd VARCHAR(1), --そろそろ消える
 				nsfw TEXT, --nsfw
-				thumbnail TEXT, --予備2
-				ext03 TEXT, --予備3
+				thumbnail TEXT, --サムネイル
+				uuid TEXT, --uuid(v7)
 				ext04 TEXT --予備4
 			)";
 			$db = $db->query($sql);
