@@ -56,7 +56,7 @@
 				</h3>
 				<section>
 					<h4 id=oya>
-						<span class="oyaname"><a href="{{$self}}?mode=search&amp;similar=kanzen&amp;search={{$bbsline['a_name']}}">{{$bbsline['a_name']}}</a></span>
+						<span class="oyaname"><a href="{{$self}}?mode=search&amp;similar=exact&amp;search={{$bbsline['a_name']}}">{{$bbsline['a_name']}}</a></span>
 						@if ($bbsline['admins'] == 1)
 						<span class="mingcute--user-star-fill"></span>
 						@endif

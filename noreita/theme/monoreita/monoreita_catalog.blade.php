@@ -172,7 +172,7 @@
 				<form class="search" method="GET" action="{{$self}}">
 					<input type="hidden" name="mode" value="search">
 					<label><input type="radio" name="similar" value="similar">部分一致</label>
-					<label><input type="radio" name="similar" value="kanzen">完全一致</label>
+					<label><input type="radio" name="similar" value="exact">完全一致</label>
 					<label><input type="radio" name="tag" value="tag">本文(ハッシュタグ)</label>
 					<br>
 					<input type="text" name="search" placeholder="検索" size="20">
@@ -203,7 +203,7 @@
 						</span>
 					</p>
 					<script>
-						colorIdx = GetCookie('_monored_colorIdx');
+						colorIdx = GetCookie('_monoreita_colorIdx');
 						document.getElementById("mystyle").selectedIndex = colorIdx;
 					</script>
 				</form>
