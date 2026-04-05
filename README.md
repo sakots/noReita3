@@ -60,7 +60,7 @@ $pallets_dat = array(['標準','palette.txt'],['PCCS_HSL','p_PCCS.txt'],['マン
 
 ### [2026/04/05]
 
-- noReita2系からの移植に方向転換
+- noReita2系から移植
 
 ### [2025/12/03]
 
