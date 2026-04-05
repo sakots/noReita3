@@ -1,9 +1,9 @@
 <?php
-//Petit Note 2021-2025 (c)satopian MIT LICENSE
+//Petit Note 2021-2026 (c)satopian MIT LICENSE
 //https://paintbbs.sakura.ne.jp/
 //https://oekakibbs.moe/
 //APIを使ってお絵かき掲示板からMisskeyにノート noReita版
-$misskey_note_ver = 20250521;
+$misskey_note_ver = 20260405;
 
 //グローバル変数の宣言
 global $en, $home, $set_nsfw, $deny_all_posts, $autolink, $use_hashtag;
@@ -36,7 +36,7 @@ function get_post_from_db($no): ?array {
 			'mail'     => $post['mail'],
 			'a_url'    => $post['a_url'],
 			'id'       => $post['id'],
-			'exid'     => $post['exid'],
+			'sodane'   => $post['sodane'],
 			'picfile'  => $post['picfile'],
 			'pchfile'  => $post['pchfile'],
 			'img_w'    => $post['img_w'],
@@ -142,7 +142,7 @@ function create_res($post): array {
 			'mail' => $post['mail'],
 			'a_url' => $post['a_url'],
 			'id' => $post['id'],
-			'exid' => $post['exid'],
+			'sodane' => $post['sodane'],
 			'picfile' => $post['picfile'],
 			'pchfile' => $post['pchfile'],
 			'img_w' => $post['img_w'],
