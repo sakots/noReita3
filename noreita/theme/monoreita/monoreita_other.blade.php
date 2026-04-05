@@ -56,7 +56,7 @@
 							<td>
 								<input type="text" name="sub" size="35" autocomplete="section-sub" value="{{$bbsline['sub']}}" maxlength="{{$max_sub}}">
 								<input type="hidden" name="invz" value="0">
-								<input type="hidden" name="exid" value="0">
+								<input type="hidden" name="sodane" value="0">
 								<input type="hidden" name="e_no" value="{{$bbsline['tid']}}">
 								@if ($token != null)
 								<input type="hidden" name="token" value="{{$token}}">

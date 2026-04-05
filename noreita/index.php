@@ -312,7 +312,7 @@ function init(): void {
 			// はじめての実行なら、テーブルを作成
 			$db = new PDO(DB_PDO);
 			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "CREATE TABLE IF NOT EXISTS tlog (
+			$sql = "CREATE TABLE IF NOT EXISTS board_log (
 				tid integer primary key autoincrement, --ID
 				created TIMESTAMP, --描いた日時
 				modified TIMESTAMP, --修正日時
@@ -326,7 +326,7 @@ function init(): void {
 				com TEXT, --本文
 				a_url TEXT, --url
 				host TEXT, --ホスト
-				exid TEXT, --そうだね
+				sodane TEXT, --そうだね
 				id TEXT, --投稿者ID
 				pwd TEXT, --パスワード
 				psec INT, --絵の時間(内部)
@@ -340,8 +340,8 @@ function init(): void {
 				tool TEXT, --絵のツール
 				admins VARCHAR(1), --認証マーク
 				shd VARCHAR(1), --そろそろ消える
-				ext01 TEXT, --nsfw
-				ext02 TEXT, --予備2
+				nsfw TEXT, --nsfw
+				thumbnail TEXT, --予備2
 				ext03 TEXT, --予備3
 				ext04 TEXT --予備4
 			)";
@@ -405,7 +405,7 @@ function regist(): void {
 	$img_h = trim(filter_input(INPUT_POST, 'img_h', FILTER_VALIDATE_INT));
 	$pwd = (string)trim(filter_input(INPUT_POST, 'pwd'));
 	$pwdh = password_hash($pwd, PASSWORD_DEFAULT);
-	$exid = trim(filter_input(INPUT_POST, 'exid', FILTER_VALIDATE_INT));
+	$sodane = trim(filter_input(INPUT_POST, 'sodane', FILTER_VALIDATE_INT));
 	$pal = filter_input(INPUT_POST, 'palettes');
 	$nsfw_flag = (string)filter_input(INPUT_POST, 'nsfw', FILTER_VALIDATE_INT);
 	$rep = (string)filter_input(INPUT_POST, 'rep');
@@ -481,7 +481,7 @@ function regist(): void {
 
 			// 二重投稿チェック
 			//最新コメント取得
-			$sqlw = "SELECT * FROM tlog WHERE thread=1 ORDER BY tid DESC LIMIT 1";
+			$sqlw = "SELECT * FROM board_log WHERE thread=1 ORDER BY tid DESC LIMIT 1";
 			$msgw = $db->prepare($sqlw);
 			$msgw->execute();
 			$msgwc = $msgw->fetch();
@@ -695,7 +695,7 @@ function regist(): void {
 			$id = str_replace("'", "''", $id);
 
 			//age値取得
-			$sqlage = "SELECT MAX(age) FROM tlog";
+			$sqlage = "SELECT MAX(age) FROM board_log";
 			$age = $db->exec("$sqlage");
 			$tree = time() * 100000000;
 
@@ -722,18 +722,18 @@ function regist(): void {
 					//age
 					$age++;
 					$agetree = $age + (time() * 100000000);
-					$sql_age = "UPDATE tlog SET age = $age, tree = $agetree WHERE tid = $parent";
+					$sql_age = "UPDATE board_log SET age = $age, tree = $agetree WHERE tid = $parent";
 					$db->exec($sql_age);
 				}
 			}
 			$shd = 0;
 			
-			$sql = "INSERT INTO tlog (created, modified, thread, parent, comid, tree, a_name, sub, com, mail, a_url, picfile, pchfile, img_w, img_h, psec, utime, pwd, id, exid, age, invz, host, tool, admins, shd, ext01, ext02) VALUES (datetime('now', 'localtime'), datetime('now', 'localtime'), :thread, :parent, :comid, :tree, :a_name, :sub, :com, :mail, :a_url, :picfile, :pchfile, :img_w, :img_h, :psec, :utime, :pwdh, :id, :exid, :age, :invz, :host, :used_tool, :admins, :shd, :nsfw, :ctype)";
+			$sql = "INSERT INTO board_log (created, modified, thread, parent, comid, tree, a_name, sub, com, mail, a_url, picfile, pchfile, img_w, img_h, psec, utime, pwd, id, sodane, age, invz, host, tool, admins, shd, nsfw, thumbnail) VALUES (datetime('now', 'localtime'), datetime('now', 'localtime'), :thread, :parent, :comid, :tree, :a_name, :sub, :com, :mail, :a_url, :picfile, :pchfile, :img_w, :img_h, :psec, :utime, :pwdh, :id, :sodane, :age, :invz, :host, :used_tool, :admins, :shd, :nsfw, :ctype)";
 
 			$stmt = $db->prepare($sql);
 			$stmt->execute(
 				[
-					'thread'=>$thread, 'parent'=>$parent, 'comid'=>$comid, 'tree'=>$tree, 'a_name'=>$name,'sub'=>$sub,'com'=>$com,'mail'=>$mail,'a_url'=>$url,'picfile'=> $picfile,'pchfile'=> $pchfile, 'img_w'=>$img_w,'img_h'=> $img_h, 'psec'=>$psec,'utime'=> $utime,'pwdh'=> $pwdh,'id'=> $id,'exid'=> $exid,'age'=> $age,'invz'=> $invz,'host'=> $host,'used_tool'=> $used_tool,'admins'=> $admins,'shd'=> $shd,'nsfw'=> $nsfw,'ctype'=> $ctype,
+					'thread'=>$thread, 'parent'=>$parent, 'comid'=>$comid, 'tree'=>$tree, 'a_name'=>$name,'sub'=>$sub,'com'=>$com,'mail'=>$mail,'a_url'=>$url,'picfile'=> $picfile,'pchfile'=> $pchfile, 'img_w'=>$img_w,'img_h'=> $img_h, 'psec'=>$psec,'utime'=> $utime,'pwdh'=> $pwdh,'id'=> $id,'sodane'=> $sodane,'age'=> $age,'invz'=> $invz,'host'=> $host,'used_tool'=> $used_tool,'admins'=> $admins,'shd'=> $shd,'nsfw'=> $nsfw,'ctype'=> $ctype,
 				]
 			);
 			//$db->exec($sql);
@@ -763,7 +763,7 @@ function regist(): void {
 	try {
 		$db = new PDO(DB_PDO);
 		$db->exec("PRAGMA journal_mode=WAL;");
-		$sqlth = "SELECT SUM(thread) as cnt FROM tlog";
+		$sqlth = "SELECT SUM(thread) as cnt FROM board_log";
 		$th_cnt_sql = $db->query("$sqlth");
 		$th_cnt_sql = $th_cnt_sql->fetch();
 		$th_cnt = $th_cnt_sql["cnt"];
@@ -782,7 +782,7 @@ function regist(): void {
 			$db = new PDO(DB_PDO);
 			$db->exec("PRAGMA journal_mode=WAL;");
 			// 古いスレッドから順番にshdフラグを設定
-			$sql = "UPDATE tlog SET shd = '1' WHERE thread = 1 AND shd = '0' ORDER BY tid ASC LIMIT ?";
+			$sql = "UPDATE board_log SET shd = '1' WHERE thread = 1 AND shd = '0' ORDER BY tid ASC LIMIT ?";
 			$stmt = $db->prepare($sql);
 			$stmt->bindValue(1, $th_cnt - $thid, PDO::PARAM_INT);
 			$stmt->execute();
@@ -823,7 +823,7 @@ function reply(): void {
 	$invz = trim(filter_input(INPUT_POST, 'invz', FILTER_VALIDATE_INT));
 	$pwd = trim(filter_input(INPUT_POST, 'pwd'));
 	$pwdh = password_hash($pwd, PASSWORD_DEFAULT);
-	$exid = trim(filter_input(INPUT_POST, 'exid', FILTER_VALIDATE_INT));
+	$sodane = trim(filter_input(INPUT_POST, 'sodane', FILTER_VALIDATE_INT));
 	$pal = filter_input(INPUT_POST, 'palettes');
 	$picfile = filter_input(INPUT_POST, 'picfile');
 	$img_w = trim(filter_input(INPUT_POST, 'img_w', FILTER_VALIDATE_INT));
@@ -891,7 +891,7 @@ function reply(): void {
 
 			// 二重投稿チェック
 			//最新コメント取得
-			$sqlw = "SELECT * FROM tlog WHERE thread=0 ORDER BY tid DESC LIMIT 1";
+			$sqlw = "SELECT * FROM board_log WHERE thread=0 ORDER BY tid DESC LIMIT 1";
 			$msgw = $db->prepare($sqlw);
 			$msgw->execute();
 			$msgwc = $msgw->fetch() ?: [];
@@ -1108,19 +1108,19 @@ function reply(): void {
 				//age
 				$age++;
 				$agetree = $age + (time() * 100000000);
-				$sql_age = "UPDATE tlog SET age = $age, tree = $agetree WHERE tid = $parent";
+				$sql_age = "UPDATE board_log SET age = $age, tree = $agetree WHERE tid = $parent";
 				$db->exec($sql_age);
 			}
 
 			//リプ処理
 			$thread = 0;
-			$sql = "INSERT INTO tlog (created, modified, thread, parent, comid, tree, a_name, sub, com, mail, a_url, picfile, pchfile, img_w, img_h, psec, utime, pwd, id, exid, age, invz, host, tool, admins, ext02) VALUES (datetime('now', 'localtime'), datetime('now', 'localtime'), :thread, :parent, :comid, :tree, :a_name, :sub, :com, :mail, :a_url, :picfile, :pchfile, :img_w, :img_h, :psec, :utime, :pwdh, :id, :exid, :age, :invz, :host, :used_tool, :admins, :ctype)";
+			$sql = "INSERT INTO board_log (created, modified, thread, parent, comid, tree, a_name, sub, com, mail, a_url, picfile, pchfile, img_w, img_h, psec, utime, pwd, id, sodane, age, invz, host, tool, admins, thumbnail) VALUES (datetime('now', 'localtime'), datetime('now', 'localtime'), :thread, :parent, :comid, :tree, :a_name, :sub, :com, :mail, :a_url, :picfile, :pchfile, :img_w, :img_h, :psec, :utime, :pwdh, :id, :sodane, :age, :invz, :host, :used_tool, :admins, :ctype)";
 
 			// プレースホルダ
 			$stmt = $db->prepare($sql);
 			$stmt->execute(
 				[
-					'thread'=>$thread, 'parent'=>$parent, 'comid'=>$comid,'tree'=>$tree, 'a_name'=>$name,'sub'=>$sub,'com'=>$com,'mail'=>$mail,'a_url'=>$url,'picfile'=> $picfile,'pchfile'=> $pchfile, 'img_w'=>$img_w,'img_h'=> $img_h, 'psec'=>$psec,'utime'=> $utime,'pwdh'=> $pwdh,'id'=> $id,'exid'=> $exid,'age'=> $age,'invz'=> $invz,'host'=> $host,'used_tool'=> $used_tool,'admins'=> $admins,'ctype'=> $ctype,
+					'thread'=>$thread, 'parent'=>$parent, 'comid'=>$comid,'tree'=>$tree, 'a_name'=>$name,'sub'=>$sub,'com'=>$com,'mail'=>$mail,'a_url'=>$url,'picfile'=> $picfile,'pchfile'=> $pchfile, 'img_w'=>$img_w,'img_h'=> $img_h, 'psec'=>$psec,'utime'=> $utime,'pwdh'=> $pwdh,'id'=> $id,'sodane'=> $sodane,'age'=> $age,'invz'=> $invz,'host'=> $host,'used_tool'=> $used_tool,'admins'=> $admins,'ctype'=> $ctype,
 				]
 			);
 			//$db->exec($sql);
@@ -1159,7 +1159,7 @@ function def(): void {
 	try {
 		$db = new PDO(DB_PDO);
 		$db->exec("PRAGMA journal_mode=WAL;");
-		$sqlth = "SELECT SUM(thread) as cnt FROM tlog";
+		$sqlth = "SELECT SUM(thread) as cnt FROM board_log";
 		$th_cnt_sql = $db->query("$sqlth");
 		$th_cnt_sql = $th_cnt_sql->fetch();
 		$th_cnt = $th_cnt_sql["cnt"];
@@ -1181,7 +1181,7 @@ function def(): void {
 	try {
 		$db = new PDO(DB_PDO);
 		$db->exec("PRAGMA journal_mode=WAL;");
-		$sqlcnt = "SELECT SUM(thread) as cnt FROM tlog WHERE invz=0";
+		$sqlcnt = "SELECT SUM(thread) as cnt FROM board_log WHERE invz=0";
 		$th_cnt_sql = $db->query("$sqlcnt");
 		$th_cnt_sql = $th_cnt_sql->fetch();
 		$count = $th_cnt_sql["cnt"];
@@ -1229,7 +1229,7 @@ function def(): void {
 		$db = new PDO(DB_PDO);
 		$db->exec("PRAGMA journal_mode=WAL;");
 		//1ページの全スレッド取得
-		$sql = "SELECT * FROM tlog WHERE invz=0 AND thread=1 ORDER BY tree DESC LIMIT ?, ?";
+		$sql = "SELECT * FROM board_log WHERE invz=0 AND thread=1 ORDER BY tree DESC LIMIT ?, ?";
 		$posts = $db->prepare($sql);
 		$posts->bindValue(1, $start, PDO::PARAM_INT);
 		$posts->bindValue(2, $page_def, PDO::PARAM_INT);
@@ -1242,8 +1242,8 @@ function def(): void {
 			if (empty($bbsline)) {
 				break;
 			} //スレがなくなったら抜ける
-			$oya_id = $bbsline["tid"]; //スレのtid(親番号)を取得
-			$sqli = "SELECT * FROM tlog WHERE parent = $oya_id AND invz=0 AND thread=0 ORDER BY comid ASC";
+			$oya_id = $bbsline["tid"]; //スレのid(親番号)を取得
+			$sqli = "SELECT * FROM board_log WHERE parent = $oya_id AND invz=0 AND thread=0 ORDER BY comid ASC";
 			//レス取得
 			$postsi = $db->query($sqli);
 			$j = 0;
@@ -1253,8 +1253,8 @@ function def(): void {
 				if ($_pchext === 'chi') {
 					$bbsline['pchfile'] = ''; //litaChixは動画リンクを出さない
 				}
-				// 拡張子がない場合やext02がimgの場合は動画リンクを出さない
-				if ($_pchext === '' || $bbsline['pchfile'] === '' || (isset($bbsline['ext02']) && $bbsline['ext02'] === 'img')) {
+				// 拡張子がない場合やthumbnailがimgの場合は動画リンクを出さない
+				if ($_pchext === '' || $bbsline['pchfile'] === '' || (isset($bbsline['thumbnail']) && $bbsline['thumbnail'] === 'img')) {
 					$bbsline['pchfile'] = '';
 				}
 				$res = $postsi->fetch();
@@ -1359,7 +1359,7 @@ function catalog(): void {
 		$start = $page_def * ($page - 1);
 
 		//最大何ページあるのか
-		$sqlth = "SELECT SUM(thread) as cnt FROM tlog WHERE invz=0";
+		$sqlth = "SELECT SUM(thread) as cnt FROM board_log WHERE invz=0";
 		$th_cnt_sql = $db->query("$sqlth");
 		$th_cnt_sql = $th_cnt_sql->fetch();
 		$th_cnt = $th_cnt_sql["cnt"];
@@ -1399,7 +1399,7 @@ function catalog(): void {
 		$db = new PDO(DB_PDO);
 		$db->exec("PRAGMA journal_mode=WAL;");
 		//1ページの全スレッド取得
-		$sql = "SELECT tid, created, modified, a_name, mail, sub, com, a_url, host, exid, id, pwd, utime, picfile, pchfile, img_w, img_h, utime, tree, parent, age, utime FROM tlog WHERE thread=1 AND invz=0 ORDER BY age DESC, tree DESC LIMIT :start, :page_def";
+		$sql = "SELECT tid, created, modified, a_name, mail, sub, com, a_url, host, sodane, id, pwd, utime, picfile, pchfile, img_w, img_h, utime, tree, parent, age, utime FROM board_log WHERE thread=1 AND invz=0 ORDER BY age DESC, tree DESC LIMIT :start, :page_def";
 		$posts = $db->prepare($sql);
 		$posts->bindValue(':start', $start, PDO::PARAM_INT);
 		$posts->bindValue(':page_def', $page_def, PDO::PARAM_INT);
@@ -1449,7 +1449,7 @@ function search(): void {
 		//全スレッド取得
 		//まずtagがあれば全文検索
 		if ($tag == 'tag') {
-			$sql = "SELECT * FROM tlog WHERE com LIKE ? AND invz=0 ORDER BY age DESC, tree DESC";
+			$sql = "SELECT * FROM board_log WHERE com LIKE ? AND invz=0 ORDER BY age DESC, tree DESC";
 			$posts = $db->prepare($sql);
 			$posts->execute(["%$search%"]);
 			$dat['catalogmode'] = 'hashsearch';
@@ -1457,12 +1457,12 @@ function search(): void {
 		} else {
 			//tagがなければ作者名検索(スレッドのみ)
 			if ($bubun == "bubun") {
-				$sql = "SELECT * FROM tlog WHERE a_name LIKE ? AND invz=0 AND thread=1 ORDER BY age DESC, tree DESC";
+				$sql = "SELECT * FROM board_log WHERE a_name LIKE ? AND invz=0 AND thread=1 ORDER BY age DESC, tree DESC";
 				$posts = $db->prepare($sql);
 				$posts->execute(["%$search%"]);
 			} else {
 				//完全一致
-				$sql = "SELECT * FROM tlog WHERE a_name LIKE ? AND invz=0 AND thread=1 ORDER BY age DESC, tree DESC";
+				$sql = "SELECT * FROM board_log WHERE a_name LIKE ? AND invz=0 AND thread=1 ORDER BY age DESC, tree DESC";
 				$posts = $db->prepare($sql);
 				$posts->execute([$search]);
 			}
@@ -1500,14 +1500,14 @@ function sodane(): void {
 	try {
 		$db = new PDO(DB_PDO);
 		$db->exec("PRAGMA journal_mode=WAL;");
-		$stmt = $db->prepare("UPDATE tlog SET exid = exid + 1 WHERE tid = ?");
+		$stmt = $db->prepare("UPDATE board_log SET sodane = sodane + 1 WHERE tid = ?");
 		$stmt->execute([$resto]);
 
 		// 更新後のそうだね数を取得
-		$stmt = $db->prepare("SELECT exid FROM tlog WHERE tid = ?");
+		$stmt = $db->prepare("SELECT sodane FROM board_log WHERE tid = ?");
 		$stmt->execute([$resto]);
 		$result = $stmt->fetch();
-		$new_exid = $result['exid'] ?? 0;
+		$new_sodane = $result['sodane'] ?? 0;
 
 		$db = null;
 
@@ -1516,7 +1516,7 @@ function sodane(): void {
 			header('Content-Type: application/json');
 			echo json_encode([
 				'success' => true,
-				'exid' => $new_exid,
+				'sodane' => $new_sodane,
 				'message' => 'そうだねしました'
 			]);
 			return;
@@ -1564,7 +1564,7 @@ function res(): void {
 	try {
 		$db = new PDO(DB_PDO);
 		$db->exec("PRAGMA journal_mode=WAL;");
-		$sql = "SELECT * FROM tlog WHERE tid = ? ORDER BY tree DESC";
+		$sql = "SELECT * FROM board_log WHERE tid = ? ORDER BY tree DESC";
 		$posts = $db->prepare($sql);
 		$posts->execute([$resno]);
 
@@ -1572,7 +1572,7 @@ function res(): void {
 		$ko = array();
 		while ($bbsline = $posts->fetch()) {
 			//スレッドの記事を取得
-			$sqli = "SELECT * FROM tlog WHERE parent = $resno AND invz = 0 ORDER BY comid ASC";
+			$sqli = "SELECT * FROM board_log WHERE parent = $resno AND invz = 0 ORDER BY comid ASC";
 			$postsi = $db->query($sqli);
 			$rresname = array();
 			while ($res = $postsi->fetch()) {
@@ -2071,7 +2071,7 @@ function in_continue(): void {
 	try {
 		$db = new PDO(DB_PDO);
 		$db->exec("PRAGMA journal_mode=WAL;");
-		$sql = "SELECT *, ext02 as ctype FROM tlog WHERE picfile=? ORDER BY tree DESC";
+		$sql = "SELECT *, thumbnail as ctype FROM board_log WHERE picfile=? ORDER BY tree DESC";
 		$posts = $db->prepare($sql);
 		$posts->execute([$no]);
 		$oya = array();
@@ -2148,7 +2148,7 @@ function delmode(): void {
 		$db->exec("PRAGMA journal_mode=WAL;");
 
 		//パスワードを取り出す
-		$sql = "SELECT pwd FROM tlog WHERE tid = ?";
+		$sql = "SELECT pwd FROM board_log WHERE tid = ?";
 		$msgs = $db->prepare($sql);
 		if ($msgs == false) {
 			error($en ? 'That post does not exist.' : 'そんな記事ない気がします。');
@@ -2160,7 +2160,7 @@ function delmode(): void {
 		}
 
 		//削除記事の画像を取り出す
-		$sqlp = "SELECT picfile FROM tlog WHERE tid = ?";
+		$sqlp = "SELECT picfile FROM board_log WHERE tid = ?";
 		$msgsp = $db->prepare($sqlp);
 		$msgsp->execute([$delno]);
 		$msgsp->execute();
@@ -2189,7 +2189,7 @@ function delmode(): void {
 			}
 			//↑画像とか削除処理完了
 			//データベースから削除
-			$sql = "DELETE FROM tlog WHERE tid = ?";
+			$sql = "DELETE FROM board_log WHERE tid = ?";
 			$stmt = $db->prepare($sql);
 			$stmt->execute([$delno]);
 			$dat['message'] = $en ? 'Successfully deleted.' : '削除しました。';
@@ -2206,14 +2206,14 @@ function delmode(): void {
 			}
 			//↑画像とか削除処理完了
 			//データベースから削除
-			$sql = "DELETE FROM tlog WHERE tid = ? OR parent = ?";
+			$sql = "DELETE FROM board_log WHERE tid = ? OR parent = ?";
 			$stmt = $db->prepare($sql);
 			$stmt->execute([$delno, $delno]);
 			$dat['message'] = $en ? 'Successfully deleted.' : '削除しました。';
 		} elseif ($admin_pass == $ppwd && $admindelmode != 1) {
 			//管理モード以外での管理者削除は
 			//データベースから削除はせずに非表示
-			$sql = "UPDATE tlog SET invz=1 WHERE tid = ?";
+			$sql = "UPDATE board_log SET invz=1 WHERE tid = ?";
 			$stmt = $db->prepare($sql);
 			$stmt->execute([$delno]);
 			$dat['message'] = $en ? 'Post hidden.' : '非表示にしました。';
@@ -2279,7 +2279,7 @@ function picreplace(): void {
 		$db = new PDO(DB_PDO);
 		$db->exec("PRAGMA journal_mode=WAL;");
 		//記事を取り出す
-		$sql = "SELECT * FROM tlog WHERE tid = ?";
+		$sql = "SELECT * FROM board_log WHERE tid = ?";
 		$msgs = $db->prepare($sql);
 		$msgs->execute([$no]);
 		$msg_d = $msgs->fetch();
@@ -2356,7 +2356,7 @@ function picreplace(): void {
 			}
 
 			//db上書き
-			$sqlrep = "UPDATE tlog set modified = datetime('now', 'localtime'), host = :host, picfile = :new_picfile, pchfile = :new_pchfile, id = :id, psec = :psec, utime = :utime, ext01 = :nsfw WHERE tid = :no";
+			$sqlrep = "UPDATE board_log set modified = datetime('now', 'localtime'), host = :host, picfile = :new_picfile, pchfile = :new_pchfile, id = :id, psec = :psec, utime = :utime, nsfw = :nsfw WHERE tid = :no";
 			// プレースホルダ
 			try {
 				$stmt = $db->prepare($sqlrep);
@@ -2407,7 +2407,7 @@ function editform(): void {
 		$db->exec("PRAGMA journal_mode=WAL;");
 
 		//パスワードを取り出す
-		$sql = "SELECT pwd FROM tlog WHERE tid = ?";
+		$sql = "SELECT pwd FROM board_log WHERE tid = ?";
 		$stmt = $db->prepare($sql);
 		$stmt->execute([$editno]);
 		$msg = $stmt->fetch();
@@ -2416,7 +2416,7 @@ function editform(): void {
 		}
 		if (password_verify($postpwd, $msg['pwd'])) {
 			//パスワードがあってたら
-			$sqli = "SELECT * FROM tlog WHERE tid = $editno";
+			$sqli = "SELECT * FROM board_log WHERE tid = $editno";
 			$posts = $db->query($sqli);
 			$oya = array();
 			while ($bbsline = $posts->fetch()) {
@@ -2427,7 +2427,7 @@ function editform(): void {
 			$dat['message'] = $en ? 'Editing mode...' : '編集モード...';
 		} elseif ($admin_pass == $postpwd) {
 			//管理者編集モード
-			$sqli = "SELECT * FROM tlog WHERE tid = $editno";
+			$sqli = "SELECT * FROM board_log WHERE tid = $editno";
 			$posts = $db->query($sqli);
 			$oya = array();
 			while ($bbsline = $posts->fetch()) {
@@ -2481,7 +2481,7 @@ function editexec(): void {
 	$picfile = trim((string)filter_input(INPUT_POST, 'picfile'));
 	$pwd = (string)trim(filter_input(INPUT_POST, 'pwd'));
 	$pwdh = password_hash($pwd, PASSWORD_DEFAULT);
-	$exid = trim((string)filter_input(INPUT_POST, 'exid', FILTER_VALIDATE_INT));
+	$sodane = trim((string)filter_input(INPUT_POST, 'sodane', FILTER_VALIDATE_INT));
 
 	//NGワードがあれば拒絶
 	Reject_if_NGword_exists_in_the_post($com, $name, $mail, $url, $sub);
@@ -2531,14 +2531,14 @@ function editexec(): void {
 	try {
 		$db = new PDO(DB_PDO);
 		$db->exec("PRAGMA journal_mode=WAL;");
-		$sql = "UPDATE tlog set modified = datetime('now', 'localtime'), a_name = :name, mail = :mail, sub = :sub, com = :com, a_url = :url, host = :host, exid = :exid, pwd = :pwdh where tid = :e_no";
+		$sql = "UPDATE board_log set modified = datetime('now', 'localtime'), a_name = :name, mail = :mail, sub = :sub, com = :com, a_url = :url, host = :host, sodane = :sodane, pwd = :pwdh where tid = :e_no";
 
 		// プレースホルダ
 		try {
 			$stmt = $db->prepare($sql);
 			$stmt->execute(
 				[
-					':name'=>$name, ':mail'=>$mail, ':sub'=>$sub, ':com'=>$com,':url'=>$url,':host'=>$host,':exid'=> $exid,':pwdh'=> $pwdh, ':e_no'=>$e_no,
+					':name'=>$name, ':mail'=>$mail, ':sub'=>$sub, ':com'=>$com,':url'=>$url,':host'=>$host,':sodane'=> $sodane,':pwdh'=> $pwdh, ':e_no'=>$e_no,
 					]
 			);
 			} catch(PDOException $e) {
@@ -2580,7 +2580,7 @@ function admin(): void {
 		//読み込み
 		$adminpass = filter_input(INPUT_POST, 'adminpass');
 		if ($adminpass === $admin_pass) {
-			$sql = "SELECT * FROM tlog WHERE thread=1 ORDER BY age DESC,tree DESC";
+			$sql = "SELECT * FROM board_log WHERE thread=1 ORDER BY age DESC,tree DESC";
 			$oya = array();
 			$posts = $db->prepare($sql);
 			$posts->execute();
@@ -2595,7 +2595,7 @@ function admin(): void {
 			$dat['oya'] = $oya;
 
 			//スレッドの記事を取得
-			$sqli = "SELECT * FROM tlog WHERE thread=0 ORDER BY tree ASC";
+			$sqli = "SELECT * FROM board_log WHERE thread=0 ORDER BY tree ASC";
 			$ko = array();
 			$postsi = $db->query($sqli);
 			while ($res = $postsi->fetch()) {
@@ -2623,7 +2623,7 @@ function usrchk(): void {
 		$db = new PDO(DB_PDO);
 		$db->exec("PRAGMA journal_mode=WAL;");
 		//パスワードを取り出す
-		$sql = "SELECT pwd FROM tlog WHERE tid = ?";
+		$sql = "SELECT pwd FROM board_log WHERE tid = ?";
 		$msgs = $db->prepare($sql);
 		$msgs->execute([$no]);
 		$msg = $msgs->fetch();
@@ -2716,12 +2716,12 @@ function logdel(): void {
 	try {
 		$db = new PDO(DB_PDO);
 		$db->exec("PRAGMA journal_mode=WAL;");
-		$sqlimg = "SELECT * FROM tlog ORDER BY tid LIMIT 1";
+		$sqlimg = "SELECT * FROM board_log ORDER BY tid LIMIT 1";
 		$msgs = $db->prepare($sqlimg);
 		$msgs->execute();
 		$msg = $msgs->fetch();
 
-		$del_tid = (int)$msg["tid"]; //消す行のスレ番号
+		$del_id = (int)$msg["tid"]; //消す行のスレ番号
 		$msgpic = $msg["picfile"]; //画像の名前取得できた
 		//画像とかの削除処理
 		if (is_file(IMG_DIR . $msgpic)) {
@@ -2736,23 +2736,23 @@ function logdel(): void {
 
 		//レスあれば削除
 		//カウント
-		$sqlc = "SELECT COUNT(*) as cnti FROM tlog WHERE parent = $del_tid";
+		$sqlc = "SELECT COUNT(*) as cnti FROM board_log WHERE parent = $del_id";
 		$countres = $db->query("$sqlc");
 		$countres = $countres->fetch();
 		$logcount = $countres["cnti"];
 		//削除
 		if ($logcount !== 0) {
-			$delres = "DELETE FROM tlog WHERE parent = $del_tid";
+			$delres = "DELETE FROM board_log WHERE parent = $del_id";
 			$db->exec($delres);
 		}
 		//スレ削除
-		$delths = "DELETE FROM tlog WHERE tid = $del_tid";
+		$delths = "DELETE FROM board_log WHERE tid = $del_id";
 		$db->exec($delths);
 
 		$sqlimg = null;
 		$delths = null;
 		$msg = null;
-		$del_tid = null;
+		$del_id = null;
 		$db = null; //db切断
 	} catch (PDOException $e) {
 		echo "DB接続エラー:" . $e->getMessage();
@@ -2767,7 +2767,7 @@ function misskey_note(): void {
 	try {
 		$db = new PDO(DB_PDO);
 		$db->exec("PRAGMA journal_mode=WAL;");
-		$sql = "SELECT * FROM tlog WHERE id=? ORDER BY tree DESC";
+		$sql = "SELECT * FROM board_log WHERE id=? ORDER BY tree DESC";
 		$posts = $db->prepare($sql);
 		$posts->execute([$no]);
 	} catch (PDOException $e) {

@@ -18,7 +18,7 @@ function get_post_from_db($no): ?array {
 		$db = new PDO(DB_PDO);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		$sql = "SELECT * FROM tlog WHERE tid = :no";
+		$sql = "SELECT * FROM board_log WHERE tid = :no";
 		$stmt = $db->prepare($sql);
 		$stmt->execute(['no' => $no]);
 		$post = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -61,7 +61,7 @@ function check_post_exists($no): bool {
 		$db = new PDO(DB_PDO);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		$sql = "SELECT COUNT(*) as count FROM tlog WHERE tid = :no";
+		$sql = "SELECT COUNT(*) as count FROM board_log WHERE tid = :no";
 		$stmt = $db->prepare($sql);
 		$stmt->execute([':no' => $no]);
 		$result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -80,7 +80,7 @@ function verify_post_password($no, $id, $pwd): bool {
 		$db = new PDO(DB_PDO);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		$sql = "SELECT pwd FROM tlog WHERE tid = :no AND id = :id";
+		$sql = "SELECT pwd FROM board_log WHERE tid = :no AND id = :id";
 		$stmt = $db->prepare($sql);
 		$stmt->execute([':no' => $no, ':id' => $id]);
 		$post = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -103,7 +103,7 @@ function check_edit_permission($no, $id, $pwd, $admin): bool {
 		$db = new PDO(DB_PDO);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		$sql = "SELECT created, admins FROM tlog WHERE tid = :no AND id = :id";
+		$sql = "SELECT created, admins FROM board_log WHERE tid = :no AND id = :id";
 		$stmt = $db->prepare($sql);
 		$stmt->execute([':no' => $no, ':id' => $id]);
 		$post = $stmt->fetch(PDO::FETCH_ASSOC);

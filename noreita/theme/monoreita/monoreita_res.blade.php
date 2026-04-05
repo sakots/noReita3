@@ -75,8 +75,8 @@
 						<span class="id">ID : {{$bbsline['id']}}</span>
 						@endif
 						<span class="sodane"><a href="{{$self}}?mode=sodane&amp;resto={{$bbsline['tid']}}">{{$sodane}}
-							@if ($bbsline['exid'] != 0)
-							x{{$bbsline['exid']}}
+							@if ($bbsline['sodane'] != 0)
+							x{{$bbsline['sodane']}}
 							@else
 							+
 							@endif
@@ -91,7 +91,7 @@
 					</h5>
 					<h5>
 						<a href="{{$path}}{{$bbsline['picfile']}}" target="_blank">{{$bbsline['picfile']}}</a>
-						@if ($bbsline['pchfile'] != null && $bbsline['pchfile'] !== '' && pathinfo($bbsline['pchfile'], PATHINFO_EXTENSION) !== '' && (!isset($bbsline['ext02']) || $bbsline['ext02'] !== 'img'))
+						@if ($bbsline['pchfile'] != null && $bbsline['pchfile'] !== '' && pathinfo($bbsline['pchfile'], PATHINFO_EXTENSION) !== '' && (!isset($bbsline['thumbnail']) || $bbsline['thumbnail'] !== 'img'))
 						<a href="{{$self}}?mode=anime&amp;pch={{$bbsline['pchfile']}}">●動画</a>
 						@endif
 						@if ($use_continue)
@@ -136,8 +136,8 @@
 										<span class="id">ID：{{$res['id']}}</span>
 										@endif
 										<span class="sodane"><a href="{{$self}}?mode=sodane&amp;resto={{$res['tid']}}">{{$sodane}}
-												@if ($res['exid'] != 0)
-												x{{$res['exid']}}
+												@if ($res['sodane'] != 0)
+												x{{$res['sodane']}}
 												@else
 												+
 												@endif
@@ -150,20 +150,20 @@
 										@if ($res['psec'] != null)
 										描画時間：{{$res['utime']}}
 										@endif
-										@if ($res['ext01'] == 1)
+										@if ($res['nsfw'] == 1)
 										★NSFW
 										@endif
 									</h5>
 									@endif
 									<h5><a target="_blank" href="{{$path}}{{$res['picfile']}}">{{$res['picfile']}}</a>
-										@if ($res['pchfile'] && (!isset($res['ext02']) || $res['ext02'] !== 'img') && ($res['tool'] !== "Chicken Paint"))
+										@if ($res['pchfile'] && (!isset($res['thumbnail']) || $res['thumbnail'] !== 'img') && ($res['tool'] !== "Chicken Paint"))
 										<a href="{{$self}}?mode=anime&amp;pch={{$res['pchfile']}}" target="_blank">●動画</a>
 										@endif
 										@if ($use_continue)
 										<a href="{{$self}}?mode=continue&amp;no={{$res['picfile']}}">●続きを描く</a>
 										@endif
 									</h5>
-									@if ($res['ext01'] == 1)
+									@if ($res['nsfw'] == 1)
 									<a class="luminous" href="{{$path}}{{$res['picfile']}}"><span class="nsfw"><img src="{{$path}}{{$res['picfile']}}" alt="{{$res['picfile']}}" loading="lazy" class="image"></span></a>
 									@else
 									<a class="luminous" href="{{$path}}{{$res['picfile']}}"><img src="{{$path}}{{$res['picfile']}}" alt="{{$res['picfile']}}" loading="lazy" class="image"></a>
@@ -285,7 +285,7 @@
 									<input type="hidden" name="img_w" value="0">
 									<input type="hidden" name="img_h" value="0">
 									<input type="hidden" name="time" value="0">
-									<input type="hidden" name="exid" value="0">
+									<input type="hidden" name="sodane" value="0">
 									<input type="hidden" name="modid" value="{{$resno}}">
 									<input type="hidden" name="resto" value="{{$resno}}">
 									@if ($token != null)
