@@ -375,6 +375,13 @@ function init(): void {
 	if (!is_dir(TEMP_DIR)) $err .= TEMP_DIR . ($en ? "does not exist<br>" : "がありません<br>");
 	if (!is_writable(TEMP_DIR)) $err .= TEMP_DIR . ($en ? "is not writable<br>" : "を書けません<br>");
 	if (!is_readable(TEMP_DIR)) $err .= TEMP_DIR . ($en ? "is not readable<br>" : "を読めません<br>");
+	if (!is_dir(($thumbnail_dir = __DIR__ . '/thumbnail/'))) {
+		mkdir($thumbnail_dir, PERMISSION_FOR_DIR);
+		chmod($thumbnail_dir, PERMISSION_FOR_DIR);
+	}
+	if (!is_dir($thumbnail_dir)) $err .= $thumbnail_dir . ($en ? "does not exist<br>" : "がありません<br>");
+	if (!is_writable($thumbnail_dir)) $err .= $thumbnail_dir . ($en ? "is not writable<br>" : "を書けません<br>");
+	if (!is_readable($thumbnail_dir)) $err .= $thumbnail_dir . ($en ? "is not readable<br>" : "を読めません<br>");
 	if ($err) error($err);
 	if (is_file(DB_NAME . '.db')) {
 		// データベースファイルのパーミッションを明示的に設定
