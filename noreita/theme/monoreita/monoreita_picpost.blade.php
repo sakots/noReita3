@@ -35,10 +35,10 @@
 					<div>
 						@foreach ($temp as $tmp)
 						<div class="imgs">
-							@if (isset($tmp['src']) && isset($tmp['srcname']))
+							@if (isset($tmp['src']) && isset($tmp['src_name']))
 							<figure>
 								<img src="{{$tmp['src']}}">
-								<figcaption>{{$tmp['srcname']}}[{{$tmp['date']}}] 描画時間{{$tmp['utime']}}</figcaption>
+								<figcaption>{{$tmp['src_name']}}[{{$tmp['date']}}] 描画時間{{$tmp['utime']}}</figcaption>
 							</figure>
 							@endif
 						</div>
@@ -79,7 +79,7 @@
 							<td>
 								<select name="picfile">
 									@foreach ($temp as $tmp)
-									@if (isset($tmp['srcname'])) <option value="{{$tmp['srcname']}}">{{$tmp['srcname']}}</option>
+									@if (isset($tmp['src_name'])) <option value="{{$tmp['src_name']}}">{{$tmp['src_name']}}</option>
 									@endif
 									@endforeach
 								</select>
