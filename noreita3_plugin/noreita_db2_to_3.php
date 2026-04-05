@@ -23,13 +23,6 @@ const DB_PDO = 'sqlite:'.DB_NAME.'.db';
 try {
   // db接続
   $db = new PDO(DB_PDO);
-  // データベースがnoreita1,2のものかチェック
-  // tlogテーブルが存在するかチェック
-  $result = $db->query("SELECT ext01 FROM sqlite_master WHERE type='table' AND name='tlog'");
-  if ($result->fetch() === false) {
-    echo "このデータベースはnoReita1,2のものではないようです。tlogテーブルが見つかりませんでした。";
-    exit;
-  }
   // tlogテーブルをboard_logテーブルに移行する
   $sql = "INSERT INTO board_log (tid, created, modified, thread, parent, comid, tree, a_name, mail, sub, com, a_url, host, sodane, id, pwd, psec, utime, picfile, pchfile, img_w, img_h, age, invz, tool, admins, shd, nsfw, thumbnail, uuid, ext04) SELECT tid, created, modified, thread, parent, comid, tree, a_name, mail, sub, com, a_url, host, exid, id, pwd, psec, utime, picfile, pchfile, img_w, img_h, age, invz, tool, admins, shd, ext01, ext02, ext03, ext04 FROM tlog";
   $stmt = $db->prepare($sql);
