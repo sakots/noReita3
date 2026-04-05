@@ -21,7 +21,7 @@ if (!is_file(__DIR__.'/functions.php')) {
   die(__DIR__.'/functions.php'.($en ? ' does not exist.':'がありません。'));
 }
 require_once(__DIR__.'/functions.php');
-if(!isset($functions_ver) || $functions_ver < 20250610) {
+if(!isset($functions_ver) || $functions_ver < 20260405) {
   die($en ? 'Please update functions.php to the latest version.' : 'functions.phpを最新版に更新してください。');
 }
 
@@ -36,7 +36,7 @@ if (CONF_VER < 20260405 || !defined('CONF_VER')) {
 //misskey_note.inc
 check_file(__DIR__.'/misskey_note.inc.php');
 require_once(__DIR__.'/misskey_note.inc.php');
-if(!isset($misskey_note_ver) || $misskey_note_ver < 20250326) {
+if(!isset($misskey_note_ver) || $misskey_note_ver < 20260405) {
   die($en ? 'Please update misskey_note.inc.php to the latest version.' : 'misskey_note.inc.phpを最新版に更新してください。');
 }
 

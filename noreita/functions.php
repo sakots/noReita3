@@ -1,5 +1,5 @@
 <?php
-$functions_ver = 20250610;
+$functions_ver = 20260405;
 
 //ページのコンテキストをセッションに保存
 function set_page_context_to_session(): void {
