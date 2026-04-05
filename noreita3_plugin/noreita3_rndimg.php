@@ -1,19 +1,19 @@
 <?php
 //--------------------------------------------------
-//  おえかきけいじばん「noReita」の画像をランダムに呼び出すphp
+//  おえかきけいじばん「noReita3」の画像をランダムに呼び出すphp
 //  by sakots & OekakiBBS reDev.Team  https://oekakibbs.moe/
 //--------------------------------------------------
 
-//  noreita_newimg.php (c)sakots 2021 lot.211130.1
+//  noreita3_rndimg.php (c)sakots 2026 lot.260405.0
 //  The MIT License
 
 // 使い方
-// noReitaのindex.phpと同じディレクトリにアップロードして
+// noReita3のindex.phpと同じディレクトリにアップロードして
 // HTMLファイルに画像を表示する時のように
-// noReita_rndimg.php ←このファイルの名前をurlで指定します。
+// noReita3_rndimg.php ←このファイルの名前をurlで指定します。
 
 // 例）
-// <img src="https://exsample.com/bbs/rois_rndimg.php" alt="" width="300">
+// <img src="https://exsample.com/bbs/noreita3_rndimg.php" alt="" width="300">
 // ↑
 // この例では横幅300px、高さの指定なし。
 
@@ -32,7 +32,7 @@ $default = '';
 include(__DIR__.'/config.php'); // config.phpの設定を読み込む
 
 // データベース接続PDO
-define('DB_PDO', 'sqlite:'.DB_NAME.'.db');
+const DB_PDO = 'sqlite:'.DB_NAME.'.db';
 
 // db接続の前にdbがなかったらそもそも処理しない
 // これを入れないとテーブルも何もないdbが作られていろいろ困る
@@ -45,7 +45,7 @@ if (!is_file(DB_NAME.'.db')) {
     // LIMIT 1 で取り出す画像が1枚だけ決まる。
     // 紆余曲折を経てこの文に行き着いた →
     // https://www.it-swarm-ja.com/ja/sql/SQLiteでランダムな行を選択します/970867568/
-    $sql = "SELECT picfile FROM tlog WHERE thread = 1 LIMIT 1 OFFSET abs(random() % (SELECT SUM(thread) FROM tlog))";
+    $sql = "SELECT picfile FROM board_log WHERE thread = 1 LIMIT 1 OFFSET abs(random() % (SELECT SUM(thread) FROM board_log))";
     $msgs = $db->prepare($sql);
     $msgs->execute();
     $msg = $msgs->fetch(); // 取り出せた

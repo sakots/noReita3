@@ -1,10 +1,10 @@
-.vscode/*
 .DS_Store
 
 img/
 thumb/
 thumbnail/
 webp/
+avif/
 temp/
 tmp/
 cache/
