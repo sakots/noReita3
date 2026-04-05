@@ -55,15 +55,15 @@ try {
     admins VARCHAR(1), --認証マーク
     shd VARCHAR(1), --そろそろ消える
     nsfw TEXT, --nsfw
-    thumbnail TEXT, --サムネイル
+    ctype TEXT, --?
     uuid TEXT, --uuid(v7)
-    ext04 TEXT --予備4
+    thumbnail TEXT --サムネイル
   )";
   $stmt = $db->prepare($sql);
   $stmt->execute();
 
   // tlogテーブルをboard_logテーブルに移行する
-  $sql = "INSERT INTO board_log (tid, created, modified, thread, parent, comid, tree, a_name, mail, sub, com, a_url, host, sodane, id, pwd, psec, utime, picfile, pchfile, img_w, img_h, age, invz, tool, admins, shd, nsfw, thumbnail, uuid, ext04) SELECT tid, created, modified, thread, parent, comid, tree, a_name, mail, sub, com, a_url, host, exid, id, pwd, psec, utime, picfile, pchfile, img_w, img_h, age, invz, tool, admins, shd, ext01, ext02, ext03, ext04 FROM tlog";
+  $sql = "INSERT INTO board_log (tid, created, modified, thread, parent, comid, tree, a_name, mail, sub, com, a_url, host, sodane, id, pwd, psec, utime, picfile, pchfile, img_w, img_h, age, invz, tool, admins, shd, nsfw, ctype, uuid, thumbnail) SELECT tid, created, modified, thread, parent, comid, tree, a_name, mail, sub, com, a_url, host, exid, id, pwd, psec, utime, picfile, pchfile, img_w, img_h, age, invz, tool, admins, shd, ext01, ext02, ext03, ext04 FROM tlog";
   $stmt = $db->prepare($sql);
   $stmt->execute();
   // tlogテーブルを削除する
