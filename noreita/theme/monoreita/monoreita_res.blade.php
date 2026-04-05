@@ -91,7 +91,7 @@
 					</h5>
 					<h5>
 						<a href="{{$path}}{{$bbsline['picfile']}}" target="_blank">{{$bbsline['picfile']}}</a>
-						@if ($bbsline['pchfile'] != null && $bbsline['pchfile'] !== '' && pathinfo($bbsline['pchfile'], PATHINFO_EXTENSION) !== '' && (!isset($bbsline['thumbnail']) || $bbsline['thumbnail'] !== 'img'))
+						@if ($bbsline['pchfile'] != null && $bbsline['pchfile'] !== '' && pathinfo($bbsline['pchfile'], PATHINFO_EXTENSION) !== '' && (!isset($bbsline['ctype']) || $bbsline['ctype'] !== 'img'))
 						<a href="{{$self}}?mode=anime&amp;pch={{$bbsline['pchfile']}}">●動画</a>
 						@endif
 						@if ($use_continue)
@@ -156,7 +156,7 @@
 									</h5>
 									@endif
 									<h5><a target="_blank" href="{{$path}}{{$res['picfile']}}">{{$res['picfile']}}</a>
-										@if ($res['pchfile'] && (!isset($res['thumbnail']) || $res['thumbnail'] !== 'img') && ($res['tool'] !== "Chicken Paint"))
+										@if ($res['pchfile'] && (!isset($res['ctype']) || $res['ctype'] !== 'img') && ($res['tool'] !== "Chicken Paint"))
 										<a href="{{$self}}?mode=anime&amp;pch={{$res['pchfile']}}" target="_blank">●動画</a>
 										@endif
 										@if ($use_continue)
