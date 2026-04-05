@@ -398,7 +398,7 @@ const CONTINUE_PASS = 0;
 // 問題なく動作している時は変更しない。
 
 // 画像やHTMLファイルのパーミッション。
-const PERMISSION_FOR_FILE = 0606; //初期値 0606
+const PERMISSION_FOR_DEST = 0606; //初期値 0606
 // ブラウザから直接呼び出さないログファイルのパーミッション
 const PERMISSION_FOR_LOG = 0600; //初期値 0600
 // 画像や動画ファイルを保存するディレクトリのパーミッション
