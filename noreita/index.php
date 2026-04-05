@@ -432,37 +432,39 @@ function regist(): void {
 	$original_name = $name;
 
 	if ($req_method !== "POST") {
-		error(MSG006);
+		error($en ? "Invalid request method." : "不正なリクエスト方法です。");
 	}
 
 	//NGワードがあれば拒絶
 	Reject_if_NGword_exists_in_the_post($com, $name, $mail, $url, $sub);
+
+	//名前がない場合は拒絶
 	if (USE_NAME && !$name) {
-		error(MSG009);
+		error($en ? "Name is required." : "名前は必須です。");
 	}
 	//レスの時は本文必須
 	//if(filter_input(INPUT_POST, 'modid') && !$com) {error(MSG008);}
 	if (USE_COM && !$com) {
-		error(MSG008);
+		error($en ? "Comment is required." : "本文は必須です。");
 	}
 	if (USE_SUB && !$sub) {
-		error(MSG010);
+		error($en ? "Subject is required." : "タイトルは必須です。");
 	}
 
 	if (strlen($com) > MAX_COM) {
-		error(MSG011);
+		error($en ? "Comment is too long." : "本文が長すぎます。");
 	}
 	if (strlen($name) > MAX_NAME) {
-		error(MSG012);
+		error($en ? "Name is too long." : "名前が長すぎます。");
 	}
 	if (strlen($mail) > MAX_EMAIL) {
-		error(MSG013);
+		error($en ? "Email is too long." : "メールアドレスが長すぎます。");
 	}
 	if (strlen($sub) > MAX_SUB) {
-		error(MSG014);
+		error($en ? "Subject is too long." : "タイトルが長すぎます。");
 	}
 	if (strlen($url) > MAX_URL) {
-		error(MSG015);
+		error($en ? "URL is too long." : "URLが長すぎます。");
 	}
 
 	//ホスト取得
@@ -470,7 +472,7 @@ function regist(): void {
 
 	foreach ($badip as $value) { //拒絶host
 		if (preg_match("/$value$/i", $host)) {
-			error(MSG016);
+			error($en ? "Your host is blocked." : "あなたのホストは拒絶されています。");
 		}
 	}
 	//セキュリティ関連ここまで
@@ -843,36 +845,36 @@ function reply(): void {
 	$original_name = $name;
 
 	if ($req_method !== "POST") {
-		error(MSG006);
+		error($en ? "Invalid request method." : "不正なリクエスト方法です。");
 	}
 
 	//NGワードがあれば拒絶
 	Reject_if_NGword_exists_in_the_post($com, $name, $mail, $url, $sub);
 	if (USE_NAME && !$name) {
-		error(MSG009);
+		error($en ? "Name is required." : "名前は必須です。");
 	}
 	//レスの時は本文必須
 	if (!$com) {
-		error(MSG008);
+		error($en ? "Comment is required." : "本文は必須です。");
 	}
 	if (USE_SUB && !$sub) {
-		error(MSG010);
+		error($en ? "Subject is required." : "タイトルは必須です。");
 	}
 
 	if (strlen($com) > MAX_COM) {
-		error(MSG011);
+		error($en ? "Comment is too long." : "本文が長すぎます。");
 	}
 	if (strlen($name) > MAX_NAME) {
-		error(MSG012);
+		error($en ? "Name is too long." : "名前が長すぎます。");
 	}
 	if (strlen($mail) > MAX_EMAIL) {
-		error(MSG013);
+		error($en ? "Email is too long." : "メールアドレスが長すぎます。");
 	}
 	if (strlen($sub) > MAX_SUB) {
-		error(MSG014);
+		error($en ? "Subject is too long." : "タイトルが長すぎます。");
 	}
 	if (strlen($url) > MAX_URL) {
-		error(MSG015);
+		error($en ? "URL is too long." : "URLが長すぎます。");
 	}
 
 	//ホスト取得
@@ -880,7 +882,7 @@ function reply(): void {
 
 	foreach ($badip as $value) { //拒絶host
 		if (preg_match("/$value$/i", $host)) {
-			error(MSG016);
+			error($en ? "Your host is blocked." : "あなたのホストは拒絶されています。");
 		}
 	}
 	//セキュリティ関連ここまで
@@ -2255,7 +2257,7 @@ function picreplace(): void {
 	$host = gethostbyaddr(get_uip());
 
 	foreach ($badip as $value) { //拒絶host
-		if (preg_match("/$value$/i", $host)) error(MSG016);
+		if (preg_match("/$value$/i", $host)) error($en ? 'Your host is blocked.' : 'あなたのホストは拒絶されています。');
 	}
 
 	/*--- テンポラリ捜査 ---*/
@@ -2276,7 +2278,7 @@ function picreplace(): void {
 	}
 	closedir($handle);
 	if (!$find) {
-		error(MSG007);
+		error($en ? 'No temporary file found.' : 'テンポラリファイルが見つかりませんでした。');
 	}
 
 	// ログ読み込み
@@ -2296,7 +2298,9 @@ function picreplace(): void {
 			$dest = IMG_DIR . $stime . '.tmp';
 			copy($up_picfile, $dest);
 
-			if (!is_file($dest)) error(MSG003);
+			if (!is_file($dest)) {
+				error($en ? 'Failed to upload image.' : '画像のアップロードに失敗しました。');
+			}
 			chmod($dest, PERMISSION_FOR_DEST);
 			//元ファイル削除
 			safe_unlink(IMG_DIR . $msg_d["picfile"]);
@@ -2375,7 +2379,7 @@ function picreplace(): void {
 			}
 			$db = $db->exec($sql_rep);
 		} else {
-			error(MSG028);
+			error($en ? 'Invalid password or post number.' : 'パスワードまたは記事番号が違います。');
 		}
 		$db = null; //db切断
 	} catch (PDOException $e) {
@@ -2475,7 +2479,7 @@ function editexec(): void {
 	$e_no = trim((string)filter_input(INPUT_POST, 'e_no'));
 
 	if ($req_method !== "POST") {
-		error(MSG006);
+		error($en ? "Request denied." : "拒絶されました");
 	}
 
 	$sub = (string)filter_input(INPUT_POST, 'sub');
@@ -2492,27 +2496,30 @@ function editexec(): void {
 	Reject_if_NGword_exists_in_the_post($com, $name, $mail, $url, $sub);
 
 	if (USE_NAME && !$name) {
-		error(MSG009);
+		error($en ? "Name is required." : "名前は必須です。");
 	}
 	//本文必須でいいだろ
 	if (!$com) {
-		error(MSG008);
+		error($en ? "Comment is required." : "本文は必須です。");
 	}
 	if (USE_SUB && !$sub) {
-		error(MSG010);
+		error($en ? "Subject is required." : "タイトルは必須です。");
 	}
 
 	if (strlen($com) > MAX_COM) {
-		error(MSG011);
+		error($en ? "Comment is too long." : "本文が長すぎます。");
 	}
 	if (strlen($name) > MAX_NAME) {
-		error(MSG012);
+		error($en ? "Name is too long." : "名前が長すぎます。");
 	}
 	if (strlen($mail) > MAX_EMAIL) {
-		error(MSG013);
+		error($en ? "Email is too long." : "メールアドレスが長すぎます。");
 	}
 	if (strlen($sub) > MAX_SUB) {
-		error(MSG014);
+		error($en ? "Subject is too long." : "タイトルが長すぎます。");
+	}
+	if (strlen($url) > MAX_URL) {
+		error($en ? "URL is too long." : "URLが長すぎます。");
 	}
 
 	//ホスト取得
@@ -2520,7 +2527,7 @@ function editexec(): void {
 
 	foreach ($badip as $value) { //拒絶host
 		if (preg_match("/$value$/i", $host)) {
-			error(MSG016);
+			error($en ? "Your host is blocked." : "あなたのホストは拒絶されています。");
 		}
 	}
 	//↑セキュリティ関連ここまで
@@ -2621,6 +2628,8 @@ function admin(): void {
 
 // コンティニュー認証 (画像)
 function usrchk(): void {
+	global $en;
+
 	$no = filter_input(INPUT_POST, 'no', FILTER_VALIDATE_INT);
 	$pwd_f = filter_input(INPUT_POST, 'pwd');
 	$flag = FALSE;
@@ -2642,7 +2651,7 @@ function usrchk(): void {
 		echo "DB接続エラー:" . $e->getMessage();
 	}
 	if (!$flag) {
-		error(MSG028);
+		error($en ? "The specified post could not be found or the password is incorrect." : "該当記事が見つからないかパスワードが間違っています");
 	}
 }
 
